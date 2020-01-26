@@ -1,45 +1,47 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
-import {  Colors, } from 'react-native/Libraries/NewAppScreen';
+import { View, Text, ImageBackground, Image ,StyleSheet, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
+import {  Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default class LoginComponent extends Component {
     constructor() {
         super()
-        this.state = { email: 'jm1@example.com', password: 'jay@123' }
+//        this.state = { email: 'jm1@example.com', password: 'jay@123' }
+        this.state = { email: '', password: '' }
     }
 
      render() {
             return <View style={styles.container}>
-                <View style={styles.topView}>
-                    <Text style={styles.loginTitle}> Login </Text>
-                </View>
+                        <ImageBackground source={ {uri: 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe'}}  style={styles.backgroundImage}>
 
-                <View style={styles.middleView}>
-                    <TextInput
-                        keyboardType='email-address'
-                        placeholder='Email'
-                        style={[styles.commonInput, styles.emailInput]}
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })}
-                    ></TextInput>
-                    <TextInput
-                        placeholder='Password'
-                        style={styles.commonInput}
-                        secureTextEntry={true}
-                        value={this.state.password}
-                        onChangeText={(password) => this.setState({ password })}
-                    ></TextInput>
+                        <View style={styles.topView}>
+                            <Text style={styles.loginTitle}> Login </Text>
+                        </View>
 
-                    <TouchableOpacity style={styles.loginButtonContainer} onPress={this.onLogin}>
-                        <Text style={styles.loginButtonText}>Login</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.middleView}>
+                        <TextInput
+                            keyboardType='email-address'
+                            placeholder='Email'
+                            style={[styles.commonInput, styles.emailInput]}
+                            value={this.state.email}
+                            onChangeText={(email) => this.setState({ email })}
+                        ></TextInput>
+                        <TextInput
+                            placeholder='Password'
+                            style={styles.commonInput}
+                            secureTextEntry={true}
+                            value={this.state.password}
+                            onChangeText={(password) => this.setState({ password })}
+                        ></TextInput>
 
-                <View style={styles.bottomView}>
+                        <TouchableOpacity style={styles.loginButtonContainer} onPress={this.onLogin}>
+                            <Text style={styles.loginButtonText}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                </View>
+                    <View style={styles.bottomView}>
 
-
+                    </View>
+                </ImageBackground>
             </View>
         }
 
@@ -50,7 +52,7 @@ export default class LoginComponent extends Component {
             // console.log('====================================');
 
             //Note:- Provide valid URL
-            fetch('http://',
+            fetch('http://api/v1/user/login',
                 {
                     method: 'POST',
                     headers: {
@@ -84,8 +86,8 @@ export default class LoginComponent extends Component {
 
     const styles = StyleSheet.create({
         loginButtonContainer: {
-            top: 20,
-            backgroundColor: 'black',
+            top:20,
+            backgroundColor: '#FF33A8',
             width: '80%',
             height: 50,
             justifyContent: 'center',
@@ -103,7 +105,7 @@ export default class LoginComponent extends Component {
             borderWidth: 1,
             height: 50,
             borderRadius: 10,
-            padding: 10
+            padding: 10,
         },
         emailInput: {
             bottom: 10
@@ -113,13 +115,14 @@ export default class LoginComponent extends Component {
         },
         loginTitle: {
             fontSize: 30,
-            fontWeight: '500'
+            fontWeight: '500',
+            color : '#FF33A8',
         },
         container: {
             flex: 1
         },
         topView: {
-            flex: 0.2,
+            flex: 0.3,
             // backgroundColor: 'cyan',
             alignItems: 'center',
             justifyContent: 'center',
@@ -131,7 +134,11 @@ export default class LoginComponent extends Component {
             alignItems: 'center'
         },
         bottomView: {
-            flex: 0.4,
+            flex: 0.3,
             // backgroundColor: 'yellow'
-        }
+        },
+         backgroundImage:{
+            flex: 1,
+            resizeMode: 'cover',
+           },
     })
