@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ImageBackground, Image ,StyleSheet, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
+import { KeyboardAvoidingView, Text, TextInput, View, Image, StyleSheet, TouchableOpacity, StatusBar, Alert, ImageBackground } from 'react-native'
 import {  Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default class LoginComponent extends Component {
@@ -46,13 +46,9 @@ export default class LoginComponent extends Component {
         }
 
         onLogin = () => {
-            // console.log('====================================');
-            // console.log(this.state.email);
-            // console.log(this.state.password);
-            // console.log('====================================');
 
             //Note:- Provide valid URL
-            fetch('http://api/v1/user/login',
+            fetch('http://35.160.197.175:3006/api/v1/user/login',
                 {
                     method: 'POST',
                     headers: {
@@ -63,24 +59,52 @@ export default class LoginComponent extends Component {
                         'password': this.state.password
                     })
                 }).then((response) => {
-                    if (response.status == 200) {
-                        return response.json()
-                    } else {
+                   if (response.status == 200) {
+                       return response.json().then((responseJSON) => {
+                           console.log(responseJSON.token);
+                          // this.goToHomePage
+                           this.storeData(responseJSON)
 
-                    }
-                }).then((responseJSON) => {
-                    console.log(responseJSON);
-                    Alert.alert('Success', 'Logged in', [
-                        {
-                            text: 'Yes',
-                            style: 'cancel'
-                        },
-                        {
-                            text: 'Yes',
-                            style: 'destructive'
-                        },
-                    ])
-                })
+                           Alert.alert('Success', 'Successfully logged in', [
+                               {
+                                   text: 'Ok',
+                                   onPress: this.goToHomePage
+
+                               },
+
+                           ])
+
+                       })
+                   } else {
+                       console.log(response.body);
+                       Alert.alert('Error', 'Please enter valid credentials.', [
+                           {
+                               text: 'Ok',
+                           },
+                       ])
+                  }
+                }
+
+
+        )}
+
+        storeData = async (responseJSON) => {
+            console.log('called store data '+responseJSON.email);
+            try {
+                let userId = '';
+                userId=responseJSON.email;
+                console.log('called try block '+ userId);
+
+               await AsyncStorage.setItem('named', userId)
+            } catch (e) {
+                console.log('called catch block----e --------'+e);
+            }
+          }
+
+        goToHomePage = () => {
+            console.log("Opening Home page")
+//                                this.props.navigation.navigate('HomePage')
+
         }
     }
 
