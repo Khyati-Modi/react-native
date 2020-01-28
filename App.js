@@ -1,7 +1,9 @@
 import React from 'react';
 // import {StyleSheet, Text, View} from 'react-native';
-import LoginComponent from './components/LoginComponent';
+// import LoginComponent from './components/LoginComponent';
+import AllPostCompoent from './components/AllPostComponent';
 
 export default function App() {
-  return <LoginComponent />;
+  // return <LoginComponent />;
+  return <AllPostCompoent />;
 }

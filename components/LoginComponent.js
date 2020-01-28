@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {AsyncStorage} from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {
   //   KeyboardAvoidingView,
   Text,
@@ -18,7 +19,7 @@ export default class LoginComponent extends Component {
   constructor() {
     super();
     //        this.state = { email: 'jm1@example.com', password: 'jay@123' }
-    this.state = {email: '', password: ''};
+    this.state = {email: 'jm1@example.com', password: 'jay@123'};
   }
 
   render() {
@@ -107,6 +108,7 @@ export default class LoginComponent extends Component {
       console.log('called try block ' + userId);
 
       await AsyncStorage.setItem('named', userId);
+      console.log('aync task successfully');
     } catch (e) {
       console.log('called catch block----e --------' + e);
     }
