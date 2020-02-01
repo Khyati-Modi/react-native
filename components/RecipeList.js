@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView, FlatList} from 'react-native';
+import RecipeCell from './RecipeCell';
 
 export default class RecipeList extends Component {
   state = {itemList: []};
@@ -12,8 +13,8 @@ export default class RecipeList extends Component {
     return (
       <SafeAreaView>
         <FlatList
-          itemList={this.state.itemList}
-          renderItem={({itemList}) => <itemList title={itemList.title} />}
+          data={this.state.itemList}
+          renderItem={({item}) => <RecipeCell itemList={item} />}
           keyExtractor={itemList => itemList.recipeId}
         />
       </SafeAreaView>
@@ -46,7 +47,6 @@ export default class RecipeList extends Component {
               };
             }),
           });
-          console.log(this.itemList);
         });
       } else {
         console.log(response.body);
