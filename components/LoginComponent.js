@@ -1,24 +1,20 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import RecipeList from './RecipeList';
 import {
-  //   KeyboardAvoidingView,
   Text,
   TextInput,
   View,
-  //   Image,
   StyleSheet,
   TouchableOpacity,
-  //   StatusBar,
   Alert,
   ImageBackground,
 } from 'react-native';
-// import {Colors} from 'react-native/Libraries/NewAppScreen';
+
 
 export default class LoginComponent extends Component {
   constructor() {
     super();
-    //        this.state = { email: 'jm1@example.com', password: 'jay@123' }
     this.state = {email: 'jm1@example.com', password: 'jay@123'};
   }
 
@@ -65,7 +61,6 @@ export default class LoginComponent extends Component {
   }
 
   onLogin = () => {
-    //Note:- Provide valid URL
     fetch('http://35.160.197.175:3006/api/v1/user/login', {
       method: 'POST',
       headers: {
@@ -79,7 +74,7 @@ export default class LoginComponent extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON.token);
-          // this.goToHomePage
+          this.goToHomePage
           this.storeData(responseJSON);
 
           Alert.alert('Success', 'Successfully logged in', [
@@ -105,18 +100,14 @@ export default class LoginComponent extends Component {
     try {
       let userId = '';
       userId = responseJSON.email;
-      console.log('called try block ' + userId);
-
       await AsyncStorage.setItem('named', userId);
-      console.log('aync task successfully');
     } catch (e) {
       console.log('called catch block----e --------' + e);
     }
   };
 
   goToHomePage = () => {
-    console.log('Opening Home page');
-    //                                this.props.navigation.navigate('HomePage')
+    this.props.navigation.navigate('RecipeList')
   };
 }
 

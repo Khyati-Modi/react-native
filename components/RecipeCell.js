@@ -10,8 +10,8 @@ import {
 
 export default function RecipeCell(props) {
   return (
-    <SafeAreaView>
-      <View>
+    
+      <View style={styles.mainView}>
         <View style={styles.headerView}>
           <Image
             style={styles.profileImage}
@@ -24,10 +24,19 @@ export default function RecipeCell(props) {
             {' '}
             {props.itemList.shefFirstName} {props.itemList.shefLastName}
           </Text>
+          <TouchableOpacity>
+            <Image
+            resizeMode={'contain'}
+            style={[styles.actionImageView, styles.rightActionButton]}
+              source={require('../images/more.png')
+            }
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.recipeImageView}>
           <Image
+          resizeMode={'stretch'}
             style={styles.recipeImage}
             source={
               props.itemList.image
@@ -38,42 +47,84 @@ export default function RecipeCell(props) {
         </View>
 
         <View style={styles.bottomView}>
-          <TouchableOpacity
-            style={styles.loginButtonContainer}
-            onPress={this.onLogin}>
+          <TouchableOpacity>
             <Image
-              style={styles.recipeImage}
-              source={require('../images/placeholder.jpeg')}
+            resizeMode={'contain'}
+            style={[styles.actionImageView, styles.leftActionButton]}
+              source={require('../images/emptyLike.png')
+            }
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+            resizeMode={'contain'}
+            style={[styles.actionImageView, styles.leftActionButton]}
+              source={require('../images/Comment.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+            resizeMode={'contain'}
+            style={[styles.actionImageView, styles.leftActionButton]}
+              source={require('../images/Send.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+            resizeMode={'contain'}
+            style={[styles.actionImageView, styles.rightActionButton]}
+              source={require('../images/emptyBookmark.png')}
             />
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    
   );
 }
 
 const styles = StyleSheet.create({
+  mainView:{
+    height: 300,
+    flex:1,
+  },
   headerView: {
     padding: 10,
     flexDirection: 'row',
-    flex: 1,
+    flex: 0.2,
     alignItems: 'center',
   },
-
   profileImage: {
     height: 25,
     width: 25,
     borderRadius: 12,
-  },
+    flexWrap: 'wrap',
+    },
   recipeImageView: {
     flex: 1,
+    height:500,
+    width: '100%'
   },
   recipeImage: {
     width: '100%',
-    height: 220,
+    height: '100%',
   },
   bottomView: {
-    flex: 1,
+    flex: 0.2,
     flexDirection: 'row',
+    height: 30,
+    width: '100%',
+    },
+  actionImageView: {
+    height: '80%',
+    marginVertical: 4,
+    width: 30,
+    },
+  leftActionButton: {
+    left: 4,
+    padding: 4,
+    marginRight: 5,
   },
+  rightActionButton: {
+   right: 0,
+  }
 });
