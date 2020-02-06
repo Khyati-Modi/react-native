@@ -1,5 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function RecipeCell(props) {
   return (
@@ -16,13 +19,11 @@ export default function RecipeCell(props) {
           {' '}
           {props.itemList.shefFirstName} {props.itemList.shefLastName}
         </Text>
-        <TouchableOpacity>
-          <Image
-            resizeMode={'contain'}
-            style={[styles.actionImageView, styles.rightActionButton]}
-            source={require('../images/more.png')}
-          />
-        </TouchableOpacity>
+        <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <TouchableOpacity>
+            <Feather name="more-vertical" size={25} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.recipeImageView}>
         <Image
@@ -59,16 +60,18 @@ export default function RecipeCell(props) {
             />
           </TouchableOpacity>
         </View>
-        <View>
-          <TouchableOpacity>
-            <View style={styles.rightActionButton}>
-              <Image
-                resizeMode={'contain'}
-                source={require('../images/emptyBookmark.png')}
-              />
-            </View>
+        <View style={{flex: 1, alignItems: 'flex-end', top: 4}}>
+          <TouchableOpacity style={styles.rightSideImage}>
+            <FontAwesome name="bookmark-o" size={25} />
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={{top: 4, left: 10, bottom: 15}}>
+        <Text>
+          {' '}
+          You can serve this recipe to {props.itemList.serves} people
+        </Text>
+        <Text> It is {props.itemList.complexity} to made </Text>
       </View>
     </View>
   );
@@ -76,8 +79,9 @@ export default function RecipeCell(props) {
 
 const styles = StyleSheet.create({
   mainView: {
-    height: 300,
+    height: 400,
     flex: 1,
+    bottom: 10,
   },
   headerView: {
     padding: 10,
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 30,
     width: '100%',
+    top: 4,
   },
   actionImageView: {
     height: '80%',
@@ -116,9 +121,7 @@ const styles = StyleSheet.create({
     padding: 4,
     marginRight: 5,
   },
-  rightActionButton: {
-    alignItems: 'flex-end',
-    width: 30,
-    height: '100%',
+  rightSideImage: {
+    marginRight: 10,
   },
 });

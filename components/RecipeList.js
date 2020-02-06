@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {SafeAreaView, FlatList, View,Text, StyleSheet,Image} from 'react-native';
+import {SafeAreaView, FlatList, View, Text, StyleSheet} from 'react-native';
 import RecipeCell from './RecipeCell';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default class RecipeList extends Component {
   state = {itemList: []};
@@ -13,14 +15,14 @@ export default class RecipeList extends Component {
     return (
       <SafeAreaView>
         <View style={styles.titleView}>
-        <Image
-            style={styles.profileImage}
-            source={require('../images/instagram.png')
-            }
-          />
+          <Feather name="camera" size={30} />
           <Text style={styles.appNameStyle}> Instagram </Text>
+          <View style={{flex: 1, alignItems: 'flex-end'}}>
+            <Feather name="send" size={25} />
+          </View>
         </View>
-        <FlatList style={styles.flatlistStyle}
+        <FlatList
+          style={styles.flatlistStyle}
           data={this.state.itemList}
           renderItem={({item}) => <RecipeCell itemList={item} />}
           keyExtractor={itemList => itemList.recipeId}
@@ -64,23 +66,23 @@ export default class RecipeList extends Component {
 }
 
 const styles = StyleSheet.create({
-  titleView:{
+  titleView: {
     padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    top: 10,
-    bottom:4,
-    height: 60,
+    bottom: 4,
+    height: 50,
   },
   profileImage: {
     height: 25,
     width: 25,
     flexWrap: 'wrap',
   },
-  appNameStyle:{
+  appNameStyle: {
+    fontFamily: 'LilyoftheValley',
     fontSize: 24,
   },
   flatlistStyle: {
     top: 2,
-  }
-})
+  },
+});
