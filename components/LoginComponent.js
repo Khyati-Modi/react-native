@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import RecipeList from './RecipeList';
+// import RecipeList from './RecipeList';
 import {
   Text,
   TextInput,
@@ -10,7 +10,6 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
-
 
 export default class LoginComponent extends Component {
   constructor() {
@@ -74,7 +73,7 @@ export default class LoginComponent extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON.token);
-          this.goToHomePage
+          this.goToHomePage;
           this.storeData(responseJSON);
 
           Alert.alert('Success', 'Successfully logged in', [
@@ -107,7 +106,7 @@ export default class LoginComponent extends Component {
   };
 
   goToHomePage = () => {
-    this.props.navigation.navigate('RecipeList')
+    this.props.navigation.navigate('RecipeList');
   };
 }
 
