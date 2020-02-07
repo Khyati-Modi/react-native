@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LoginComponent from './LoginComponent'
+// import LoginComponent from './components/LoginComponent';
+// import RecipeList from './components/RecipeList';
+import ProfileComponent from './components/ProfileScreen';
 
 export default function App() {
-  return (<LoginComponent></LoginComponent>)
+  // return <LoginComponent />;
+  return <ProfileComponent />;
 }
-
-
