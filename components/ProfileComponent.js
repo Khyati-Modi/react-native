@@ -9,8 +9,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 
 export default class ProfileComponent extends Component {
   render() {
@@ -19,7 +17,8 @@ export default class ProfileComponent extends Component {
         <View style={styles.titleView}>
           <Text> Khyati Modi </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <TouchableOpacity onPress={this.onSideMenu}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.openDrawer()}>
               <AntDesign name="menu-fold" size={25} />
             </TouchableOpacity>
           </View>
@@ -64,13 +63,13 @@ export default class ProfileComponent extends Component {
     );
   }
 
-  onLogin = () => {
-    <createDrawerNavigator>
-      navigation.openDrawer();
-      <View>
-        <Text> Your drawer is here</Text>
-      </View>
-    </createDrawerNavigator>;
+  onSideMenu = () => {
+    // <createDrawerNavigator>
+    //   navigation.openDrawer();
+    //   <View>
+    //     <Text> Your drawer is here</Text>
+    //   </View>
+    // </createDrawerNavigator>;
   };
 }
 const styles = StyleSheet.create({

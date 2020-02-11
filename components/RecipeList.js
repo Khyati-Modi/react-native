@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   appNameStyle: {
-    fontFamily: 'LilyoftheValley',
+    // fontFamily: 'LilyoftheValley',
     fontSize: 24,
   },
   flatlistStyle: {

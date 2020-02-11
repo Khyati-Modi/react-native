@@ -1,9 +1,31 @@
-import React from 'react';
-// import LoginComponent from './components/LoginComponent';
-// import RecipeList from './components/RecipeList';
-import ProfileComponent from './components/ProfileScreen';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import LoginComponent from './components/LoginComponent';
+import MainScreen from './components/MainScreen';
 
-export default function App() {
-  // return <LoginComponent />;
-  return <ProfileComponent />;
-}
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      // SplashScreen: {
+      //   screen: SplashScreen,
+      //   navigationOptions: {
+      //     header: null,
+      //   },
+      // },
+      LoginPage: {
+        screen: LoginComponent,
+        navigationOptions: {
+          header: null,
+        },
+      },
+      MainScreen: {
+        screen: MainScreen,
+        navigationOptions: {
+          header: null,
+        },
+      },
+    },
+    {
+      mode: 'modal',
+    },
+  ),
+);

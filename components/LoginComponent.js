@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-// import RecipeList from './RecipeList';
 import {
   Text,
   TextInput,
@@ -106,7 +105,7 @@ export default class LoginComponent extends Component {
   };
 
   goToHomePage = () => {
-    this.props.navigation.navigate('RecipeList');
+    this.props.navigation.navigate('MainScreen');
   };
 }
 
