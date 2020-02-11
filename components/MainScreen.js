@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,30 +12,12 @@ import ProfileComponent from './ProfileComponent';
 import AddRecipeComponent from './AddRecipeComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
+import RecipeDetail from './RecipeDetail';
+import LogoutComponent from './LogoutComponent';
 
 export default class MainScreen extends Component {
   render() {
     return <AppContainer />;
-  }
-}
-
-class ActvityScreen extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Activitye</Text>
-      </View>
-    );
-  }
-}
-
-class DetailScreen extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Search Screen</Text>
-      </View>
-    );
   }
 }
 
@@ -49,7 +30,7 @@ const homePageNavigator = createStackNavigator(
       },
     },
     Details: {
-      screen: DetailScreen,
+      screen: RecipeDetail,
       navigationOptions: ({navigation}) => ({
         // title: `${navigation.state.params.details.name}`,
       }),
@@ -123,9 +104,9 @@ const DrawerNavigation = createDrawerNavigator(
       },
     },
     Drawer: {
-      screen: ActvityScreen,
+      screen: LogoutComponent,
       navigationOptions: {
-        title: 'Activity',
+        title: 'Log out',
 
         // drawerIcon: (
         //   <Image
@@ -214,14 +195,3 @@ const bottomTabNavigator = createBottomTabNavigator(
   },
 );
 const AppContainer = createAppContainer(bottomTabNavigator);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  icon: {
-    height: 19,
-    width: 25,
-    marginStart: 20,
-  },
-});

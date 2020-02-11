@@ -7,7 +7,6 @@ export default class SearchComponent extends Component {
     // this.setState({isLoading: true});
     console.log('called Search comopent');
     console.log('===========================');
-
     // this.getListfromApi();
   }
   render() {
@@ -17,8 +16,6 @@ export default class SearchComponent extends Component {
           <TextInput
             placeholder="   Search any recipe here"
             style={styles.searchBtn}
-            // value={this.state.email}
-            // onChangeText={email => this.setState({email})}
           />
         </View>
       </SafeAreaView>

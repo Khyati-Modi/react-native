@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {Text, View, SafeAreaView} from 'react-native';
 
-export default class AddRecipeComponent extends Component {
+export default class RecipeDetail extends Component {
   componentDidMount() {
     // this.setState({isLoading: true});
-    console.log('called Add REcipe comopent');
+    console.log('called Recipe Detail comopent');
     console.log('===========================');
-
-    // this.getListfromApi();
   }
 
   render() {
     return (
       <SafeAreaView>
         <View>
-          <Text>Add New Recipe</Text>
+          <Text>Detail of your recipe</Text>
         </View>
       </SafeAreaView>
     );
