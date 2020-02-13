@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {SafeAreaView, FlatList, View, Text, StyleSheet} from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
+import * as constant from './Constants';
 
 export default class RecipeList extends Component {
   state = {itemList: []};
@@ -24,20 +25,25 @@ export default class RecipeList extends Component {
         <FlatList
           style={styles.flatlistStyle}
           data={this.state.itemList}
-          renderItem={({item}) => <RecipeCell itemList={item} />}
+          renderItem={({item}) => (
+            <RecipeCell
+              itemList={item}
+              onClick={() => this.onPostClick(this.item)}
+            />
+          )}
           keyExtractor={itemList => itemList.recipeId}
         />
+        <View style={{height: 50, backgroundColor: 'black'}} />
       </SafeAreaView>
     );
   }
   fetchRecipeList = () => {
-    //Note:- Provide valid URL
-    fetch('http://35.160.197.175:3006/api/v1/recipe/feeds', {
+    fetch(constant.API_FOR_FEED_LIST, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.MGBf-reNrHdQuwQzRDDNPMo5oWv4GlZKlDShFAAe16s',
+        // eslint-disable-next-line prettier/prettier
+        'Authorization': constant.API_TOKEN,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -63,6 +69,12 @@ export default class RecipeList extends Component {
       }
     });
   };
+
+  onPostClick(itemList) {
+    console.log('clicked Post item');
+    this.props.navigation.navigate('RecipeDetail');
+    console.log('clicked Post item');
+  }
 }
 
 const styles = StyleSheet.create({

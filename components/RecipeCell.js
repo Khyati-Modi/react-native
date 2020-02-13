@@ -26,15 +26,17 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={styles.recipeImageView}>
-        <Image
-          resizeMode={'stretch'}
-          style={styles.recipeImage}
-          source={
-            props.itemList.image
-              ? {uri: props.itemList.image}
-              : require('../images/placeholder.jpeg')
-          }
-        />
+        <TouchableOpacity onPress={props.onClick}>
+          <Image
+            resizeMode={'stretch'}
+            style={styles.recipeImage}
+            source={
+              props.itemList.image
+                ? {uri: props.itemList.image}
+                : require('../images/placeholder.jpeg')
+            }
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>

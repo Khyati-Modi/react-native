@@ -9,6 +9,7 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
+import * as constant from './Constants';
 
 export default class LoginComponent extends Component {
   constructor() {
@@ -98,7 +99,8 @@ export default class LoginComponent extends Component {
     try {
       let userId = '';
       userId = responseJSON.email;
-      await AsyncStorage.setItem('named', userId);
+      await AsyncStorage.setItem(constant.NAME, userId);
+      await AsyncStorage.setItem(constant.API_TOKEN, responseJSON.token);
     } catch (e) {
       console.log('called catch block----e --------' + e);
     }
