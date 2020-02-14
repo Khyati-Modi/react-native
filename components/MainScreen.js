@@ -31,9 +31,6 @@ const homePageNavigator = createStackNavigator(
     },
     Details: {
       screen: RecipeDetail,
-      navigationOptions: ({navigation}) => ({
-        // title: `${navigation.state.params.details.name}`,
-      }),
     },
   },
   {
@@ -45,7 +42,7 @@ homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
-      if (route.routeName === 'RecipeDetail') {
+      if (route.routeName === 'Details') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;
@@ -134,7 +131,7 @@ const DrawerNavigation = createDrawerNavigator(
 const bottomTabNavigator = createBottomTabNavigator(
   {
     Home: {
-      screen: RecipeList,
+      screen: homePageNavigator,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Fontisto name="home" size={22} color={tintColor} />

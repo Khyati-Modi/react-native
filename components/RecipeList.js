@@ -71,9 +71,7 @@ export default class RecipeList extends Component {
   };
 
   onPostClick(itemList) {
-    console.log('clicked Post item');
-    this.props.navigation.navigate('RecipeDetail');
-    console.log('clicked Post item');
+    this.props.navigation.navigate('Details', {details: itemList});
   }
 }
 

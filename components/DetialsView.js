@@ -15,6 +15,10 @@ export default class DetailsView extends Component {
       <SafeAreaView>
         <View>
           <Text>Your DetailsView are here</Text>
+          <Text>Your DetailsView are here</Text>
+          <Text>Your DetailsView are here</Text>
+          <Text>Your DetailsView are here</Text>
+          <Text>Your DetailsView are here</Text>
         </View>
       </SafeAreaView>
     );
