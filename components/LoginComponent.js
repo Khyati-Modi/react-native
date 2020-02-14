@@ -98,9 +98,12 @@ export default class LoginComponent extends Component {
     console.log('called store data ' + responseJSON.email);
     try {
       let userId = '';
+      let UserName = '';
       userId = responseJSON.email;
+      UserName = responseJSON.firstName + responseJSON.lastName;
+      await AsyncStorage.setItem(constant.UserName, UserName);
       await AsyncStorage.setItem(constant.NAME, userId);
-      await AsyncStorage.setItem(constant.API_TOKEN, responseJSON.token);
+      await AsyncStorage.setItem(constant.User_Token, responseJSON.token);
     } catch (e) {
       console.log('called catch block----e --------' + e);
     }
@@ -128,7 +131,6 @@ const styles = StyleSheet.create({
   },
   commonInput: {
     width: '80%',
-    // backgroundColor: 'red',
     borderWidth: 1,
     height: 50,
     borderRadius: 10,
@@ -148,19 +150,16 @@ const styles = StyleSheet.create({
   },
   topView: {
     flex: 0.3,
-    // backgroundColor: 'cyan',
     alignItems: 'center',
     justifyContent: 'center',
   },
   middleView: {
     flex: 0.4,
-    // backgroundColor: 'pink',
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottomView: {
     flex: 0.3,
-    // backgroundColor: 'yellow'
   },
   backgroundImage: {
     flex: 1,

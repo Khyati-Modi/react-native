@@ -28,7 +28,7 @@ export default class RecipeList extends Component {
           renderItem={({item}) => (
             <RecipeCell
               itemList={item}
-              onClick={() => this.onPostClick(this.item)}
+              onClick={() => this.onPostClick(this.state.itemList)}
             />
           )}
           keyExtractor={itemList => itemList.recipeId}
@@ -38,12 +38,12 @@ export default class RecipeList extends Component {
     );
   }
   fetchRecipeList = () => {
-    fetch(constant.API_FOR_FEED_LIST, {
+    fetch(constant.All_Recipe_List, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.API_TOKEN,
+        'Authorization': constant.User_Token,
       },
     }).then(response => {
       if (response.status === 200) {

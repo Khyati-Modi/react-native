@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
@@ -13,6 +14,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
@@ -32,6 +34,7 @@ export default class ProfileComponent extends Component {
   constructor() {
     super();
     this.state = {
+      UserName: '',
       checked: false,
       isLoading: false,
       recipesList: [],
@@ -43,7 +46,17 @@ export default class ProfileComponent extends Component {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ1KKk22o-PiYCzh7Mc7G8KvPbiSFypE06mkSKWnRqP9lmjp1Yy',
     };
   }
-
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(constant.UserName);
+      if (value !== null) {
+        console.log(value);
+        this.setState({UserName: value});
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     return (
       <SafeAreaView>
@@ -81,7 +94,7 @@ export default class ProfileComponent extends Component {
           </View>
 
           <View style={{top: 20, left: 10}}>
-            <Text style={{top: 4}}> {constant.NAME} </Text>
+            <Text style={{top: 4}}> {this.state.UserName} </Text>
             <Text style={{top: 8}}> User's Profile Info </Text>
           </View>
         </View>
@@ -112,10 +125,12 @@ export default class ProfileComponent extends Component {
                   <TouchableWithoutFeedback
                     onPress={() => this.onPostClick(item)}>
                     <Image
+                      resizeMode={'stretch'}
+                      // style={styles.recipeImage}
                       source={
-                        item.photo != null
+                        item.photo
                           ? {uri: item.photo}
-                          : {uri: this.state.placeHolderImage}
+                          : require('../images/placeholder.jpeg')
                       }
                       style={styles.image}
                     />
@@ -132,11 +147,12 @@ export default class ProfileComponent extends Component {
   }
 
   getListfromApi = () => {
-    fetch(constant.API_FOR_FEED_LIST, {
+    fetch(constant.All_Recipe_List, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.API_TOKEN,
+        // eslint-disable-next-line prettier/prettier
+        'Authorization': constant.User_Token,
       },
     }).then(response => {
       if (response.status === 200) {
