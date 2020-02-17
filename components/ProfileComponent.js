@@ -1,6 +1,9 @@
-/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/no-did-mount-set-state */
+/* eslint-disable no-undef */
 import React, {Component} from 'react';
+
 import {
   Dimensions,
   Alert,
@@ -28,6 +31,7 @@ export default class ProfileComponent extends Component {
 
   componentDidMount() {
     this.setState({isLoading: true});
+    this.retrieveData();
     this.getListfromApi();
   }
 
@@ -43,7 +47,7 @@ export default class ProfileComponent extends Component {
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
       profilePicture:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ1KKk22o-PiYCzh7Mc7G8KvPbiSFypE06mkSKWnRqP9lmjp1Yy',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRKST55Mx58WF4twW6nV77TLqj5BTA5DUHhmhB5sEmI59AyAJ0R',
     };
   }
   retrieveData = async () => {
@@ -61,7 +65,7 @@ export default class ProfileComponent extends Component {
     return (
       <SafeAreaView>
         <View style={styles.titleView}>
-          <Text> Khyati Modi </Text>
+          <Text> {this.state.UserName} </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
             <TouchableOpacity
               onPress={() => this.props.navigation.openDrawer()}>
@@ -123,7 +127,7 @@ export default class ProfileComponent extends Component {
                 }}>
                 <View style={styles.postContainer}>
                   <TouchableWithoutFeedback
-                    onPress={() => this.onPostClick(item)}>
+                    onPress={() => this.onPostClicked(item)}>
                     <Image
                       resizeMode={'stretch'}
                       // style={styles.recipeImage}
@@ -174,7 +178,7 @@ export default class ProfileComponent extends Component {
     });
   };
 
-  onPostClick = item => {
+  onPostClicked = item => {
     console.log(item);
   };
 }
@@ -190,7 +194,6 @@ const styles = StyleSheet.create({
     top: 15,
     left: 15,
     alignItems: 'flex-start',
-    backgroundColor: 'red',
     width: 100,
     height: 100,
     borderRadius: 50,

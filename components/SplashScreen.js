@@ -9,6 +9,8 @@ export default class SplashScreen extends Component {
     this.state = {name: ''};
   }
   componentDidMount() {
+    console.log('splash');
+console.log('===========================');
     this.retrieveData();
     setTimeout(() => {
       if (this.state.name === '') {

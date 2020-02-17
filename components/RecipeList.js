@@ -28,7 +28,7 @@ export default class RecipeList extends Component {
           renderItem={({item}) => (
             <RecipeCell
               itemList={item}
-              onClick={() => this.onPostClick(this.state.itemList)}
+              onClick={details => this.onPostClick(details)}
             />
           )}
           keyExtractor={itemList => itemList.recipeId}
@@ -70,8 +70,8 @@ export default class RecipeList extends Component {
     });
   };
 
-  onPostClick(itemList) {
-    this.props.navigation.navigate('Details', {details: itemList});
+  onPostClick(details) {
+    this.props.navigation.navigate('Details', {details: details});
   }
 }
 

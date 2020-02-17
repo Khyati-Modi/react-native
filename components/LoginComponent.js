@@ -12,6 +12,13 @@ import {
 import * as constant from './Constants';
 
 export default class LoginComponent extends Component {
+
+  componentDidMount() {
+    // this.setState({isLoading: true});
+    console.log('called lofin comopent');
+    console.log('===========================');
+    // this.getListfromApi();
+    }
   constructor() {
     super();
     this.state = {email: 'jm1@example.com', password: 'jay@123'};
@@ -100,7 +107,7 @@ export default class LoginComponent extends Component {
       let userId = '';
       let UserName = '';
       userId = responseJSON.email;
-      UserName = responseJSON.firstName + responseJSON.lastName;
+      UserName = responseJSON.firstName + ' ' + responseJSON.lastName;
       await AsyncStorage.setItem(constant.UserName, UserName);
       await AsyncStorage.setItem(constant.NAME, userId);
       await AsyncStorage.setItem(constant.User_Token, responseJSON.token);
