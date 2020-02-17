@@ -16,13 +16,6 @@ import RecipeDetail from './RecipeDetail';
 import LogoutComponent from './LogoutComponent';
 
 export default class MainScreen extends Component {
-
-  componentDidMount() {
-    // this.setState({isLoading: true});
-    console.log('called MAin comopent');
-    console.log('===========================');
-    // this.getListfromApi();
-    }
   render() {
     return <AppContainer />;
   }

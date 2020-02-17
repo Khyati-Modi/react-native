@@ -12,13 +12,6 @@ import {
 import * as constant from './Constants';
 
 export default class LoginComponent extends Component {
-
-  componentDidMount() {
-    // this.setState({isLoading: true});
-    console.log('called lofin comopent');
-    console.log('===========================');
-    // this.getListfromApi();
-    }
   constructor() {
     super();
     this.state = {email: 'jm1@example.com', password: 'jay@123'};
@@ -79,7 +72,6 @@ export default class LoginComponent extends Component {
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log(responseJSON.token);
           this.goToHomePage;
           this.storeData(responseJSON);
 
@@ -102,7 +94,6 @@ export default class LoginComponent extends Component {
   };
 
   storeData = async responseJSON => {
-    console.log('called store data ' + responseJSON.email);
     try {
       let userId = '';
       let UserName = '';

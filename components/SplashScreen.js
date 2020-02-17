@@ -9,8 +9,6 @@ export default class SplashScreen extends Component {
     this.state = {name: ''};
   }
   componentDidMount() {
-    console.log('splash');
-console.log('===========================');
     this.retrieveData();
     setTimeout(() => {
       if (this.state.name === '') {
@@ -42,8 +40,6 @@ console.log('===========================');
     try {
       const value = await AsyncStorage.getItem(constant.NAME);
       if (value !== null) {
-        // We have data!!
-        console.log(value);
         this.setState({name: value});
       }
     } catch (error) {
