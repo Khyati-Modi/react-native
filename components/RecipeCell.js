@@ -26,7 +26,10 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={styles.recipeImageView}>
-        <TouchableOpacity onPress={() => {props.onClick(props.itemList)}}>
+        <TouchableOpacity
+          onPress={() => {
+            props.onClick(props.itemList);
+          }}>
           <Image
             resizeMode={'stretch'}
             style={styles.recipeImage}

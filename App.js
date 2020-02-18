@@ -8,21 +8,12 @@ export default createAppContainer(
     {
       SplashScreen: {
         screen: SplashScreen,
-        navigationOptions: {
-          header: null,
-        },
       },
       LoginComponent: {
         screen: LoginComponent,
-        navigationOptions: {
-          header: null,
-        },
       },
       MainScreen: {
         screen: MainScreen,
-        navigationOptions: {
-          header: null,
-        },
       },
     },
     {

@@ -29,9 +29,6 @@ const homePageNavigator = createStackNavigator(
   {
     Posts: {
       screen: RecipeList,
-      navigationOptions: {
-        header: null,
-      },
     },
     Details: {
       screen: RecipeDetail,

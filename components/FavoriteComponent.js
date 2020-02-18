@@ -5,7 +5,6 @@ import FavoriteCell from './FavouriteCell';
 
 export default class FavoriteComponent extends Component {
 
-  state = {cookingList: []};
   componentDidMount() {
     this.setState({isLoading: true});
     this.getFavRecipes();
@@ -22,6 +21,8 @@ constructor() {
     refreshing: false,
     setRefreshing: false,
     isLoading: false,
+    cookingList: [] ,
+
     };
   }
 
@@ -64,6 +65,7 @@ constructor() {
 
   btnFavoutiteClick(details) {
     console.log(details.recipeId);
+    console.log(constant.User_Token);
     fetch(constant.Remove_From_CookingList, {
       method: 'POST',
       body: {
@@ -76,6 +78,8 @@ constructor() {
     }).then(response => {
       if (response.status == 200) {
         return response.json().then(responseJSON => {
+          console.log("Deleted ");
+          console.log(responseJSON);          
           this.getFavRecipes();
           Alert.alert('Success', 'Remove from cooking list', [
             {
@@ -97,10 +101,10 @@ constructor() {
   }
 
   getFavRecipes = () => {
-    console.log("AGian call fetc chdfjkhfufd");
-    console.log("----------------------------------------------------------");
-    console.log("AGian call fetc chdfjkhfufd");
-    console.log("----------------------------------------------------------");
+    // console.log("AGian call fetc chdfjkhfufd");
+    // console.log("----------------------------------------------------------");
+    // console.log("AGian call fetc chdfjkhfufd");
+    // console.log("----------------------------------------------------------");
     fetch(constant.Cooking_List_API, {
       method: 'GET',
       headers: {
