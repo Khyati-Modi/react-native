@@ -14,7 +14,7 @@ export default class RecipeList extends Component {
   }
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={styles.titleView}>
           <Feather name="camera" size={30} />
           <Text style={styles.appNameStyle}> Instagram </Text>
@@ -58,8 +58,8 @@ export default class RecipeList extends Component {
                 preparationTime: items.preparationTime,
                 serves: items.serves,
                 complexity: items.complexity,
-                shefFirstName: items.firstName,
-                shefLastName: items.lastName,
+                chefFirstName: items.firstName,
+                chefLastName: items.lastName,
               };
             }),
           });

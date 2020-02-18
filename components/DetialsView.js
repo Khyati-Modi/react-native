@@ -8,9 +8,9 @@ export default class DetailsView extends Component {
     const itemDetails = this.props.screenProps.itemDetails.details;
     this.setState({photo: itemDetails.image});
     this.setState({nameofRecipe: itemDetails.recipeName});
-    this.setState({firstName: itemDetails.shefFirstName});
+    this.setState({firstName: itemDetails.chefFirstName});
     this.setState({inCookingList: itemDetails.inCookingList});
-    this.setState({lastName: itemDetails.shefLastName});
+    this.setState({lastName: itemDetails.chefLastName});
     this.setState({serves: itemDetails.serves});
     this.setState({recipeId: itemDetails.recipeId});
   }

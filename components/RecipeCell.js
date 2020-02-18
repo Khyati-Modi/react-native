@@ -17,7 +17,7 @@ export default function RecipeCell(props) {
         />
         <Text>
           {' '}
-          {props.itemList.shefFirstName} {props.itemList.shefLastName}
+          {props.itemList.chefFirstName} {props.itemList.chefLastName}
         </Text>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
           <TouchableOpacity>

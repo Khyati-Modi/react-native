@@ -39,17 +39,17 @@ export default class InstructionsView extends Component {
                 onRefresh={this.onRefresh}
               />
             }
-            data={this.state.instructionsList.instruction}
-           
+            data={this.state.instructionsList.instructions}
             renderItem={({item}) => {
               return (
                 <View>
-                  <View style={{flexDirection: 'row', alignItems: 'center',backgroundColor: 'yellow', top: 16,  height: 400}}>
+                  <View style={{flexDirection: 'row', top: 16}}>
                     <Entypo name="dot-single" size={20} />
                     <Text
-                      style={{ marginStart: 10,fontSize: 16, backgroundColor: 'yellow', height: 400}}>
-                      {item}
+                      style={{ marginStart: 10,fontSize: 16}}>
+                      {item.instruction}
                     </Text>
+                    <Text></Text>
                   </View>
                 </View>
               );
@@ -70,6 +70,11 @@ export default class InstructionsView extends Component {
       </View>
     );
   };
+
+  separator = () => {
+    return ( <View style={{height: 8, width: '100%'}} /> 
+    )
+  }
 
   getInstructions = recipeId => {
     fetch('http://35.160.197.175:3006/api/v1/recipe/'+recipeId+'/details', {
@@ -105,6 +110,5 @@ const styles = StyleSheet.create({
   container: {
     height: 400,
     margin: 10,
-    backgroundColor: 'cyan',
   },
 });

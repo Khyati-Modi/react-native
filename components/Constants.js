@@ -6,6 +6,8 @@ export const User_Token =
 export const All_Recipe_List = 'http://35.160.197.175:3006/api/v1/recipe/feeds';
 export const Cooking_List_API =
   'http://35.160.197.175:3006/api/v1/recipe/cooking-list';
+  export const Remove_From_CookingList = 
+  'http://35.160.197.175:3006/api/v1/recipe/rm-from-cooking-list';
 export const Add_Image_API =
   'http://35.160.197.175:3006/api/v1/recipe/add-update-recipe-photo';
 export const Add_New_Recipe = 'http://35.160.197.175:3006/api/v1/recipe/add';

@@ -6,6 +6,8 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
+import {View, Text, Image, StyleSheet,SafeAreaView, TouchableOpacity, colors, Alert} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import RecipeList from './RecipeList';
 import ProfileComponent from './ProfileComponent';
@@ -14,6 +16,8 @@ import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import LogoutComponent from './LogoutComponent';
+import {DrawerItems} from 'react-navigation-drawer';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default class MainScreen extends Component {
   render() {
@@ -32,7 +36,7 @@ const homePageNavigator = createStackNavigator(
     Details: {
       screen: RecipeDetail,
       navigationOptions: ({navigation}) => ({
-        title: `${navigation.state.params.details.recipeName}`,
+        title: null,
       }),
     },
   },
@@ -92,35 +96,48 @@ const DrawerNavigation = createDrawerNavigator(
   {
     ProfileScreen: {
       screen: ProfileComponent,
-      navigationOptions: {
-        title: 'Profile',
-
-        // drawerIcon: (
-        // //   <Image
-        // //     source={require('../../images/userBlack.png')}
-        // //     style={[{width: 19, height: 19, marginStart: 20}]}
-        // //   />
-        // ),
-      },
-    },
-    Drawer: {
-      screen: LogoutComponent,
-      navigationOptions: {
-        title: 'Log out',
-
-        // drawerIcon: (
-        //   <Image
-        //     source={require('../../images/timer.png')}
-        //     style={[{width: 19, height: 19, marginStart: 20}]}
-        //   />
-        // ),
+            navigationOptions: {
+        title: '',
+        drawerIcon: (
+          <AntDesign name="left" size={20} />
+        ),
       },
     },
   },
   {
+    contentComponent:(props) => (
+      <View style={{flex:1}}>
+          <SafeAreaView>
+            <DrawerItems { ...props } />
+            <TouchableOpacity onPress={()=>
+              Alert.alert(
+                'Log out',
+                'Do you want to logout?',
+                [
+                  {text: 'No', onPress: () => {return null}},
+                  {text: 'Yes', onPress: () => {
+                    AsyncStorage.clear();
+                    console.log('-------------');
+                    props.navigation.navigate('LoginComponent');
+                    console.log('-------------');
+                  }},
+                ],
+                { cancelable: false }
+              )  
+            }>
+              <Text style={{margin: 16,fontWeight: 'bold'}}>Logout</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+      </View>
+    ),
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle',
     initialRouteName: 'ProfileScreen',
     drawerPosition: 'right',
-    drawerType: 'slide',
+    drawerType: 'slide'
+  },
+  {
     contentOptions: {
       inactiveTintColor: '#8E8E8E',
       activeTintColor: '#000000',

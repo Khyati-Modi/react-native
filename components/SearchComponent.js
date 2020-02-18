@@ -28,7 +28,7 @@ export default class SearchComponent extends Component {
       <SafeAreaView>
         <View style={styles.SearchView}>
           <TextInput
-            style={{width: '90%'}}
+            style={{width: '90%', padding: 10}}
             placeholder="   Search any recipe here "
             onChangeText={search => this.setState({search})}
           />
@@ -38,7 +38,7 @@ export default class SearchComponent extends Component {
             <AntDesign
               style={{alignItems: 'flex-end'}}
               name="search1"
-              color="pink"
+              color="#005CFF"
               size={20}
             />
           </TouchableOpacity>
@@ -76,7 +76,7 @@ export default class SearchComponent extends Component {
 }
 const styles = StyleSheet.create({
   SearchView: {
-    borderColor: 'pink',
+    borderColor: '#005CFF',
     borderWidth: 2,
     top: 16,
     height: 40,
