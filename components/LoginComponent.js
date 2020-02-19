@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-// import RecipeList from './RecipeList';
 import {
   Text,
   TextInput,
@@ -10,8 +9,11 @@ import {
   Alert,
   ImageBackground,
 } from 'react-native';
+import * as constant from './Constants';
+import {setToken} from './Actions/userTokenAction';
+import {connect} from 'react-redux';
 
-export default class LoginComponent extends Component {
+class LoginComponent extends Component {
   constructor() {
     super();
     this.state = {email: 'jm1@example.com', password: 'jay@123'};
@@ -72,7 +74,7 @@ export default class LoginComponent extends Component {
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log(responseJSON.token);
+          this.props.setToken(responseJSON.token);
           this.goToHomePage;
           this.storeData(responseJSON);
 
@@ -95,20 +97,38 @@ export default class LoginComponent extends Component {
   };
 
   storeData = async responseJSON => {
-    console.log('called store data ' + responseJSON.email);
     try {
       let userId = '';
+      let UserName = '';
       userId = responseJSON.email;
-      await AsyncStorage.setItem('named', userId);
+      UserName = responseJSON.firstName + ' ' + responseJSON.lastName;
+      await AsyncStorage.setItem(constant.UserName, UserName);
+      await AsyncStorage.setItem(constant.NAME, userId);
+      await AsyncStorage.setItem(constant.User_Token, responseJSON.token);
     } catch (e) {
-      console.log('called catch block----e --------' + e);
+      console.log('Error to store data' + e);
     }
   };
 
   goToHomePage = () => {
-    this.props.navigation.navigate('RecipeList');
+    this.props.navigation.navigate('MainScreen');
   };
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: token => {
+      dispatch(setToken(token));
+    },
+  };
+};
+const mapStateToProps = state => {
+  return {token: state.token};
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginComponent);
 
 const styles = StyleSheet.create({
   loginButtonContainer: {
@@ -127,7 +147,6 @@ const styles = StyleSheet.create({
   },
   commonInput: {
     width: '80%',
-    // backgroundColor: 'red',
     borderWidth: 1,
     height: 50,
     borderRadius: 10,
@@ -147,19 +166,16 @@ const styles = StyleSheet.create({
   },
   topView: {
     flex: 0.3,
-    // backgroundColor: 'cyan',
     alignItems: 'center',
     justifyContent: 'center',
   },
   middleView: {
     flex: 0.4,
-    // backgroundColor: 'pink',
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottomView: {
     flex: 0.3,
-    // backgroundColor: 'yellow'
   },
   backgroundImage: {
     flex: 1,

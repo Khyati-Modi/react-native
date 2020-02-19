@@ -17,7 +17,7 @@ export default function RecipeCell(props) {
         />
         <Text>
           {' '}
-          {props.itemList.shefFirstName} {props.itemList.shefLastName}
+          {props.itemList.chefFirstName} {props.itemList.chefLastName}
         </Text>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
           <TouchableOpacity>
@@ -26,15 +26,20 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={styles.recipeImageView}>
-        <Image
-          resizeMode={'stretch'}
-          style={styles.recipeImage}
-          source={
-            props.itemList.image
-              ? {uri: props.itemList.image}
-              : require('../images/placeholder.jpeg')
-          }
-        />
+        <TouchableOpacity
+          onPress={() => {
+            props.onClick(props.itemList);
+          }}>
+          <Image
+            resizeMode={'stretch'}
+            style={styles.recipeImage}
+            source={
+              props.itemList.image
+                ? {uri: props.itemList.image}
+                : require('../images/placeholder.jpeg')
+            }
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>
