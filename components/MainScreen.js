@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
@@ -6,7 +7,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-import {View, Text, Image, StyleSheet,SafeAreaView, TouchableOpacity, colors, Alert} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import RecipeList from './RecipeList';
@@ -15,7 +16,6 @@ import AddRecipeComponent from './AddRecipeComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
-import LogoutComponent from './LogoutComponent';
 import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -29,6 +29,9 @@ const homePageNavigator = createStackNavigator(
   {
     Posts: {
       screen: RecipeList,
+      navigationOptions: {
+        header: null,
+      },
     },
     Details: {
       screen: RecipeDetail,
@@ -93,38 +96,43 @@ const DrawerNavigation = createDrawerNavigator(
   {
     ProfileScreen: {
       screen: ProfileComponent,
-            navigationOptions: {
+      navigationOptions: {
         title: '',
-        drawerIcon: (
-          <AntDesign name="left" size={20} />
-        ),
+        drawerIcon: <AntDesign name="left" size={20} />,
       },
     },
   },
   {
-    contentComponent:(props) => (
-      <View style={{flex:1}}>
-          <SafeAreaView>
-            <DrawerItems { ...props } />
-            <TouchableOpacity onPress={()=>
+    contentComponent: props => (
+      <View style={{flex: 1}}>
+        <SafeAreaView>
+          <DrawerItems {...props} />
+          <TouchableOpacity
+            onPress={() =>
               Alert.alert(
                 'Log out',
                 'Do you want to logout?',
                 [
-                  {text: 'No', onPress: () => {return null}},
-                  {text: 'Yes', onPress: () => {
-                    AsyncStorage.clear();
-                    console.log('-------------');
-                    props.navigation.navigate('LoginComponent');
-                    console.log('-------------');
-                  }},
+                  {
+                    text: 'No',
+                    onPress: () => {
+                      return null;
+                    },
+                  },
+                  {
+                    text: 'Yes',
+                    onPress: () => {
+                      AsyncStorage.clear();
+                      props.navigation.navigate('LoginComponent');
+                    },
+                  },
                 ],
-                { cancelable: false }
-              )  
+                {cancelable: false},
+              )
             }>
-              <Text style={{margin: 16,fontWeight: 'bold'}}>Logout</Text>
-            </TouchableOpacity>
-          </SafeAreaView>
+            <Text style={{margin: 16, fontWeight: 'bold'}}>Logout</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
       </View>
     ),
     drawerOpenRoute: 'DrawerOpen',
@@ -132,7 +140,7 @@ const DrawerNavigation = createDrawerNavigator(
     drawerToggleRoute: 'DrawerToggle',
     initialRouteName: 'ProfileScreen',
     drawerPosition: 'right',
-    drawerType: 'slide'
+    drawerType: 'slide',
   },
   {
     contentOptions: {

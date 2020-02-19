@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/no-did-mount-set-state */
 /* eslint-disable no-undef */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {setRecipeList} from './Actions/dataAction';
 
 import {
   Dimensions,
@@ -23,7 +24,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
 import LoadingIndicator from './LoadingIndicator';
 
-export default class ProfileComponent extends Component {
+class ProfileComponent extends Component {
   onRefresh = () => {
     this.setState({setRefreshing: true});
     this.getListfromApi();
@@ -32,7 +33,7 @@ export default class ProfileComponent extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
     this.retrieveData();
-    this.getListfromApi();
+    // this.getListfromApi();
   }
 
   constructor() {
@@ -41,7 +42,6 @@ export default class ProfileComponent extends Component {
       UserName: '',
       checked: false,
       isLoading: false,
-      recipesList: [],
       refreshing: false,
       setRefreshing: false,
       placeHolderImage:
@@ -54,7 +54,6 @@ export default class ProfileComponent extends Component {
     try {
       const value = await AsyncStorage.getItem(constant.UserName);
       if (value !== null) {
-        console.log(value);
         this.setState({UserName: value});
       }
     } catch (error) {
@@ -106,7 +105,7 @@ export default class ProfileComponent extends Component {
         <View style={styles.EditView}>
           <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
         </View>
-        <LoadingIndicator isLoading={this.state.isLoading} />
+        {/* <LoadingIndicator isLoading={this.state.isLoading} /> */}
         <FlatList
           refreshControl={
             <RefreshControl
@@ -115,7 +114,7 @@ export default class ProfileComponent extends Component {
             />
           }
           numColumns={3}
-          data={this.state.recipesList}
+          data={this.props.recipeList}
           renderItem={({item}) => {
             return (
               <View
@@ -156,14 +155,12 @@ export default class ProfileComponent extends Component {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.User_Token,
+        'Authorization': this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           this.setState({recipesList: responseJSON});
-          console.log('Your response fetch by api.');
-          //DATA = responseJSON
           this.setState({isLoading: false});
         });
       } else {
@@ -182,6 +179,29 @@ export default class ProfileComponent extends Component {
     console.log(item);
   };
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setRecipeList: list => {
+      dispatch(setRecipeList(list));
+    },
+  };
+};
+
+const mapStateToProps = state => {
+  console.log(state);
+
+  return {
+    recipeList: state.dataReducer.recipeList,
+    token: state.userTokenReducer.token,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileComponent);
+
 const styles = StyleSheet.create({
   titleView: {
     padding: 10,

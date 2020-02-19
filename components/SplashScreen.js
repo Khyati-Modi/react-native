@@ -19,6 +19,7 @@ export default class SplashScreen extends Component {
         this.props.navigation.navigate('MainScreen');
       }
     }, 2000);
+    // this.props.navigation.navigate('LoginComponent');
   }
   render() {
     return (

@@ -1,5 +1,14 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, StyleSheet, FlatList, RefreshControl, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  RefreshControl,
+  Alert,
+} from 'react-native';
 import LoadingIndicator from './LoadingIndicator';
 import * as constant from './Constants';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -27,48 +36,51 @@ export default class IngredientsView extends Component {
     return (
       <SafeAreaView>
         {/* <View style={styles.container}> */}
-          <LoadingIndicator isLoading={this.state.isLoading} />
-          <FlatList
-          style= {styles.container}
-            ItemSeparatorComponent={this.separator}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh}
-              />
-            }
-            data={this.state.ingredientList}
-            renderItem={({item}) => {
-              return (
-                <View>
-                  <View style={{flexDirection: 'row', alignItems: 'center', top: 16}}>
-                    <Entypo name="dot-single" size={20} />
-                    <Text
-                      style={{ marginStart: 10,fontSize: 16}}>
-                      {item.ingredient}
-                    </Text>
-                  </View>
+        <LoadingIndicator isLoading={this.state.isLoading} />
+        <FlatList
+          style={styles.container}
+          ItemSeparatorComponent={this.separator}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+          data={this.state.ingredientList}
+          renderItem={({item}) => {
+            return (
+              <View>
+                <View
+                  style={{flexDirection: 'row', alignItems: 'center', top: 16}}>
+                  <Entypo name="dot-single" size={20} />
+                  <Text style={{marginStart: 10, fontSize: 16}}>
+                    {item.ingredient}
+                  </Text>
                 </View>
-              );
-            }}
-            keyExtractor={item => item.id}
-            extraData={this.state}
-            ListEmptyComponent={this.ListEmpty}
-          />
-      {/* </View> */}
-    </SafeAreaView>
+              </View>
+            );
+          }}
+          keyExtractor={item => item.id}
+          extraData={this.state}
+          ListEmptyComponent={this.ListEmpty}
+        />
+        {/* </View> */}
+      </SafeAreaView>
     );
   }
 
   getIngredients = recipeId => {
-    fetch('http://35.160.197.175:3006/api/v1/recipe/' + recipeId + '/ingredients', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+    fetch(
+      'http://35.160.197.175:3006/api/v1/recipe/' + recipeId + '/ingredients',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: constant.User_Token,
+        },
       },
-    }).then(response => {
-      if (response.status == 200) {
+    ).then(response => {
+      if (response.status === 200) {
         return response.json().then(responseJSON => {
           this.setState({ingredientList: responseJSON});
           this.setState({isLoading: false});

@@ -26,7 +26,7 @@ export default class SearchComponent extends Component {
       searchResult: [],
       refreshing: false,
       setRefreshing: false,
-      search: 'Idli',
+      search: '',
     };
   }
 
@@ -37,7 +37,7 @@ export default class SearchComponent extends Component {
           <View style={styles.SearchView}>
             <TextInput
               style={{width: '90%', padding: 10}}
-              placeholder="   Search any recipe here "
+              placeholder="Search any recipe here "
               value={this.state.search}
               onChangeText={search => this.setState({search})}
             />
@@ -59,7 +59,7 @@ export default class SearchComponent extends Component {
               marginTop: 24,
             }}>
             <FlatList
-              style={{marginBottom: 4}}
+              style={{marginBottom: 30}}
               ItemSeparatorComponent={this.separator}
               refreshControl={
                 <RefreshControl
@@ -74,7 +74,6 @@ export default class SearchComponent extends Component {
                     <View style={styles.recipeImageView}>
                       <TouchableOpacity style={{justifyContent: 'center'}}>
                         <Image
-                          resizeMode={'stretch'}
                           style={styles.recipeImage}
                           source={
                             item.photo
@@ -158,13 +157,10 @@ const styles = StyleSheet.create({
     width: '94%',
     alignSelf: 'center',
   },
-  recipeImageView: {
-    height: '100%',
-    width: '100%',
-  },
+
   recipeImage: {
     width: '96%',
-    height: '60%',
+    height: 150,
     alignSelf: 'center',
   },
 });

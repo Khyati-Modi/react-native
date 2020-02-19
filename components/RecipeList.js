@@ -4,12 +4,16 @@ import {SafeAreaView, FlatList, View, Text, StyleSheet} from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
 import * as constant from './Constants';
+import {connect} from 'react-redux';
+import {setRecipeList} from './Actions/dataAction';
 
-export default class RecipeList extends Component {
+class RecipeList extends Component {
   state = {itemList: []};
 
   constructor() {
     super();
+  }
+  componentDidMount() {
     this.fetchRecipeList();
   }
   render() {
@@ -33,7 +37,7 @@ export default class RecipeList extends Component {
           )}
           keyExtractor={itemList => itemList.recipeId}
         />
-        <View style={{height: 50, backgroundColor: 'black'}} />
+        <View style={{height: 50}} />
       </SafeAreaView>
     );
   }
@@ -43,11 +47,12 @@ export default class RecipeList extends Component {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.User_Token,
+        'Authorization': this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
+          this.props.setRecipeList(responseJSON);
           this.setState({
             itemList: responseJSON.map(function(items) {
               return {
@@ -74,6 +79,23 @@ export default class RecipeList extends Component {
     this.props.navigation.navigate('Details', {details: details});
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    setRecipeList: list => {
+      dispatch(setRecipeList(list));
+    },
+  };
+};
+const mapStateToProps = state => {
+  return {
+    token: state.userTokenReducer.token,
+    recipeFeed: state.dataReducer.recipeFeed,
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RecipeList);
 
 const styles = StyleSheet.create({
   titleView: {
