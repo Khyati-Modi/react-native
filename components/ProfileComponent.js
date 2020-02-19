@@ -1,6 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-did-mount-set-state */
-/* eslint-disable no-undef */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
@@ -22,7 +21,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
-import LoadingIndicator from './LoadingIndicator';
+// import LoadingIndicator from './LoadingIndicator';
 
 class ProfileComponent extends Component {
   onRefresh = () => {
@@ -46,8 +45,8 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRKST55Mx58WF4twW6nV77TLqj5BTA5DUHhmhB5sEmI59AyAJ0R',
+      // profilePicture:
+      //   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRKST55Mx58WF4twW6nV77TLqj5BTA5DUHhmhB5sEmI59AyAJ0R',
     };
   }
   retrieveData = async () => {
@@ -62,7 +61,7 @@ class ProfileComponent extends Component {
   };
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={styles.titleView}>
           <Text> {this.state.UserName} </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
@@ -78,7 +77,7 @@ class ProfileComponent extends Component {
             <View>
               <Image
                 style={styles.profileImage}
-                source={{uri: this.state.profilePicture}}
+                source={{uri: constant.profilePicture}}
               />
             </View>
 
@@ -103,7 +102,9 @@ class ProfileComponent extends Component {
         </View>
 
         <View style={styles.EditView}>
-          <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
+          <TouchableOpacity onPress={this.goToEditView}>
+            <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
+          </TouchableOpacity>
         </View>
         {/* <LoadingIndicator isLoading={this.state.isLoading} /> */}
         <FlatList
@@ -175,6 +176,10 @@ class ProfileComponent extends Component {
     });
   };
 
+  goToEditView = () => {
+    this.props.navigation.navigate('Edit');
+  };
+
   onPostClicked = item => {
     console.log(item);
   };
@@ -189,8 +194,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     recipeList: state.dataReducer.recipeList,
     token: state.userTokenReducer.token,

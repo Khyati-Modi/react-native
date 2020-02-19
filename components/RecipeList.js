@@ -47,7 +47,7 @@ class RecipeList extends Component {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': this.props.token,
+        'Authorization': constant.User_Token,
       },
     }).then(response => {
       if (response.status === 200) {

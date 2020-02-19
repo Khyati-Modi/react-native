@@ -16,6 +16,7 @@ import AddRecipeComponent from './AddRecipeComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
+import EditProfileComponent from './EditProfileComponent';
 import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -35,6 +36,26 @@ const homePageNavigator = createStackNavigator(
     },
     Details: {
       screen: RecipeDetail,
+      navigationOptions: ({navigation}) => ({
+        title: null,
+      }),
+    },
+  },
+  {
+    mode: 'card',
+  },
+);
+
+const profileNavigator = createStackNavigator(
+  {
+    Profile: {
+      screen: ProfileComponent,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Edit: {
+      screen: EditProfileComponent,
       navigationOptions: ({navigation}) => ({
         title: null,
       }),
@@ -101,6 +122,12 @@ const DrawerNavigation = createDrawerNavigator(
         drawerIcon: <AntDesign name="left" size={20} />,
       },
     },
+  //   EditProfile: {
+  //     screen: EditProfileComponent,
+  //     navigationOptions: {
+  //       header: null,
+  //     },
+  //   },
   },
   {
     contentComponent: props => (
@@ -200,7 +227,7 @@ const bottomTabNavigator = createBottomTabNavigator(
       },
     },
     Profile: {
-      screen: DrawerNavigation,
+      screen: profileNavigator,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <MaterialIcons name="person-outline" size={28} color={tintColor} />
