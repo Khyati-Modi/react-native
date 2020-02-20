@@ -7,7 +7,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-import {View, Text, SafeAreaView, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Alert, Button} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import RecipeList from './RecipeList';
@@ -58,6 +58,14 @@ const profileNavigator = createStackNavigator(
       screen: EditProfileComponent,
       navigationOptions: ({navigation}) => ({
         title: null,
+        header: null,
+        // headerRight: () => (
+        //   <Button
+        //     onPress={() => {this.saveProfileImage()}}
+        //     title="Save"
+        //     color="#147efb"
+        //   />
+        // ),
       }),
     },
   },

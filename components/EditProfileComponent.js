@@ -8,81 +8,122 @@ import {
   Image,
   Dimensions,
   Button,
+  Alert,
 } from 'react-native';
 import * as constant from './Constants';
-import * as Permission from 'expo-permissions'
-// import * as ImagePicker from 'expo-image-picker'
-// import ImagePicker from 'react-native-image-picker';
+import * as Permission from 'react-native-permissions'
+import ImagePicker from 'react-native-image-picker';
+import { BackHandler } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class EditProfileComponent extends Component {
   constructor() {
     super()
-    this.state = { image: null }
-    Permission.askAsync(Permission.CAMERA)
-    Permission.askAsync(Permission.CAMERA_ROLL)
+    this.state = { image: constant.profilePicture,
+    editPhotoTapped: null, }
+
 }
   componentDidMount() {
     console.log('in edit profile screen');
   }
+
+  chooseImage = () => {
+    var options = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        let source = response;
+        console.log(response.uri);
+        this.setState({
+          image: response.uri,
+          editPhotoTapped: true,
+        });
+      }
+    });
+  }
+  saveProfileImage = () => {
+    // constant.profilePicture = this.state.image;
+    AsyncStorage.setItem(constant.profilePicture, this.state.image);
+    this.setState({
+      editPhotoTapped: null,
+    });
+    Alert.alert('','Profile Image updated successfully', [
+      {
+        text: 'Ok',
+      },
+    ]);
+  }
   render() {
     return (
-      <SafeAreaView>
-        {/* <ScrollView> */}
+      <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={{width: '100%', height: '100%'}}>
+        <View style={{height: 44, width: '100%', flexDirection: 'row'}}> 
+        <View style= {{flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity style= {{flexDirection: 'row', alignItems: 'center'}} onPress={this.backAction}> 
+          <AntDesign name="left" size={20} color='#147efb' style={{padding: 4}}> </AntDesign>
+          <Text style={{color: '#147efb', fontSize: 20}}>Profile</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <TouchableOpacity style={{marginRight: 8,justifyContent:'center',alignItems:'center',height:'100%'}} onPress={this.saveProfileImage}>
+            <Text style={{color: '#147efb', fontSize: 20, alignSelf: 'center'}}>Save</Text>
+         </TouchableOpacity>
+        </View>
+        </View>
           <View
             style={{
               flex: 0.5,
-              // backgroundColor: 'blue',
               justifyContent: 'center',
             }}>
             <TouchableOpacity
-              style={{
-                width: '35%',
-                height: '40%',
-                alignSelf: 'center',
-                borderRadius: 50 ,
-              }}>
+              style={{ width: '35%',height: '40%',alignSelf: 'center',borderRadius: 50}}>
               <Image
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: 50 ,
-                }}
-                source={{uri: constant.profilePicture}}
+                style={{ width: '100%',height: '100%',borderRadius: 50}}
+                source={{uri: this.state.image}}
               />
             </TouchableOpacity>
-            <Button title = "Change Profile " onPress={this.changeProfile}> </Button>
+            <Button title = "Change Profile " onPress={this.chooseImage} > </Button>
           </View>
-          <View style={{flex: 0.5, backgroundColor: 'cyan'}}>
-            <Text> new View</Text>
-            <Button title='Camera' onPress={this.onCamera}></Button>
-                <Button title='Image Gallery' onPress={this.onGallery}></Button>
-                {this.state.image && <Image style={{ width: 300, height: 300 }} source={{ uri: this.state.image }}></Image>}
+          <View style={{flex: 0.5}}>
           </View>
         </View>
-
-        {/* </ScrollView> */}
       </SafeAreaView>
     );
   }
 
-  changeProfile = () => {
-    console.log('open camera');
-    
+  backAction = () => {
+    console.log(this.state.editPhotoTapped);
+    { this.state.editPhotoTapped && Alert.alert(
+      'Unsaved changes',
+      'You have unsaved changes. Are you sure you want to cancel?',
+      [
+        {
+          text: 'No',
+          onPress: () => {
+            return null;
+          },
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            this.props.navigation.navigate('Profile');
+          },
+        },
+      ],
+      {cancelable: false},
+    )
   }
-
-  onCamera = () => {
-    ImagePicker.launchCameraAsync().then((result) => {
-        this.setState({ image: result.uri })
-        console.log(result);
-    })
-}
-
-onGallery = () => {
-    ImagePicker.launchImageLibraryAsync().then((result) => {
-        this.setState({ image: result.uri })
-        console.log(result);
-    })
-}
+  {!this.state.editPhotoTapped && this.props.navigation.navigate('Profile');} 
+  }
  }

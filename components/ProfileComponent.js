@@ -35,6 +35,12 @@ class ProfileComponent extends Component {
     // this.getListfromApi();
   }
 
+  componentWillMount(){
+    console.log('Called ***********************************************************************************');
+    this.retrieveData();
+    this.setState({profilePicture: constant.profilePicture});
+  }
+
   constructor() {
     super();
     this.state = {
@@ -45,8 +51,7 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      // profilePicture:
-      //   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRKST55Mx58WF4twW6nV77TLqj5BTA5DUHhmhB5sEmI59AyAJ0R',
+      profilePicture: constant.profilePicture,
     };
   }
   retrieveData = async () => {
@@ -77,7 +82,7 @@ class ProfileComponent extends Component {
             <View>
               <Image
                 style={styles.profileImage}
-                source={{uri: constant.profilePicture}}
+                source={{uri: this.state.profilePicture}}
               />
             </View>
 
