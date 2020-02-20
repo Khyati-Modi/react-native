@@ -1,24 +1,25 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-import {View, Text, SafeAreaView, TouchableOpacity, Alert, Button} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import ProfileComponent from './ProfileComponent';
+import {DrawerItems} from 'react-navigation-drawer';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import RecipeList from './RecipeList';
-import ProfileComponent from './ProfileComponent';
 import AddRecipeComponent from './AddRecipeComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
-import {DrawerItems} from 'react-navigation-drawer';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import SettingsNavigation from './SettingsNavigation';
+
 
 export default class MainScreen extends Component {
   render() {
@@ -73,6 +74,20 @@ const profileNavigator = createStackNavigator(
     mode: 'card',
   },
 );
+
+// const profileNavigator = createSwitchNavigator(
+//   {
+//     Profile: {
+//       screen: SettingsNavigation,
+//     },
+//     Edit: {
+//       screen: EditProfileComponent,
+//     },
+//   },
+//   {
+//     mode: 'card',
+//   },
+// );
 
 homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
@@ -216,7 +231,7 @@ const bottomTabNavigator = createBottomTabNavigator(
       screen: AddRecipeComponent,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="add" size={30} color={tintColor} />
+          <Entypo name="location" size={30} color={tintColor} />
         ),
         tabBarLabel: () => {
           return null;

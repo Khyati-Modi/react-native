@@ -18,6 +18,7 @@
     "react-native": "^0.61.5",
     "react-native-gesture-handler": "^1.5.6",
     "react-native-image-picker": "^2.3.0",
+    "react-native-maps": "^0.26.1",
     "react-native-permissions": "^2.0.9",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.2",
