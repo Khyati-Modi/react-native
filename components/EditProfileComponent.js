@@ -14,13 +14,20 @@ import ImagePicker from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
 import {setProfileImage} from './Actions/profileImageAction';
-
+import Permissions from 'react-native-permissions';
 
 class EditProfileComponent extends Component {
   constructor() {
     super()
     this.state = { image: ' ',
     editPhotoTapped: null, }
+}
+
+componentDidMount(){
+  check(Permissions);
+  this.setState({
+    image : this.props.image,
+  })
 }
 
   chooseImage = () => {

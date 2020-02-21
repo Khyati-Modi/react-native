@@ -69,6 +69,17 @@ export default class IngredientsView extends Component {
     );
   }
 
+  ListEmpty = () => {
+    return (
+      //View to show when list is empty
+      <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+        <Text style={{textAlign: 'center', fontSize: 20}}>
+          No Ingredients Found
+        </Text>
+      </View>
+    );
+  };
+
   getIngredients = recipeId => {
     fetch(
       'http://35.160.197.175:3006/api/v1/recipe/' + recipeId + '/ingredients',

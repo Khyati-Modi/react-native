@@ -3,6 +3,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default function RecipeCell(props) {
   return (
@@ -43,12 +44,8 @@ export default function RecipeCell(props) {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>
-          <TouchableOpacity>
-            <Image
-              resizeMode={'contain'}
-              style={[styles.actionImageView, styles.leftActionButton]}
-              source={require('../images/emptyLike.png')}
-            />
+        <TouchableOpacity style={styles.leftActionButton}>
+          { props.itemList.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
           </TouchableOpacity>
           <TouchableOpacity>
             <Image

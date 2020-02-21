@@ -19,7 +19,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
 // import LoadingIndicator from './LoadingIndicator';
@@ -31,10 +30,16 @@ class ProfileComponent extends Component {
   };
 
   componentDidMount() {
-    console.log("546372184710######################))483756478");
+    this.props.navigation.addListener("didFocus", () => {
+      // user has navigated to this screen
+      this.setState({profilePicture: this.props.profilePicture});
+    });
+
+    this.props.navigation.addListener("didBlur", () => {
+    });
+    
     console.log(this.state.profilePicture);
-    console.log("546372184710######################))483756478");
-    this.setState({isLoading: true});
+    this.setState({isLoading: true, profilePicture: this.props.profilePicture});
     this.retrieveData();
     // this.getListfromApi();
   }
@@ -49,7 +54,7 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture: ' ',
+      profilePicture: '',
     };
   }
   retrieveData = async () => {

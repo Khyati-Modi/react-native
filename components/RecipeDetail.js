@@ -3,9 +3,9 @@
 import React, {Component} from 'react';
 import {Text, View, SafeAreaView, ScrollView} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import DetailsMenu from './DetailsMenu';
-import { block } from 'react-native-reanimated';
 
 export default class RecipeDetail extends Component {
   componentDidMount() {
@@ -34,7 +34,8 @@ export default class RecipeDetail extends Component {
             <View style={{flexDirection: 'row', top: 8}}>
               <Text style={{fontSize: 25, fontWeight: 'bold'}}> {this.state.recipeDetail.recipeName}</Text>
               <View style={{flex: 0.97, alignItems: 'flex-end'}}>
-                <FontAwesome name="bookmark-o" size={25} />
+              { this.state.recipeDetail.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
+                {/* <FontAwesome name="bookmark-o" size={25} /> */}
               </View>
             </View>
             <Text style={{fontSize: 18, top: 10}}> By chef {this.state.recipeDetail.chefFirstName} {this.state.recipeDetail.chefLastName} </Text>

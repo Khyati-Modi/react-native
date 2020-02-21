@@ -65,6 +65,7 @@ class RecipeList extends Component {
                 complexity: items.complexity,
                 chefFirstName: items.firstName,
                 chefLastName: items.lastName,
+                inCookingList: items.inCookingList,
               };
             }),
           });

@@ -18,7 +18,7 @@ import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
-import SettingsNavigation from './SettingsNavigation';
+import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
 
 
 export default class MainScreen extends Component {
@@ -60,13 +60,6 @@ const profileNavigator = createStackNavigator(
       navigationOptions: ({navigation}) => ({
         title: null,
         header: null,
-        // headerRight: () => (
-        //   <Button
-        //     onPress={() => {this.saveProfileImage()}}
-        //     title="Save"
-        //     color="#147efb"
-        //   />
-        // ),
       }),
     },
   },
@@ -74,20 +67,6 @@ const profileNavigator = createStackNavigator(
     mode: 'card',
   },
 );
-
-// const profileNavigator = createSwitchNavigator(
-//   {
-//     Profile: {
-//       screen: SettingsNavigation,
-//     },
-//     Edit: {
-//       screen: EditProfileComponent,
-//     },
-//   },
-//   {
-//     mode: 'card',
-//   },
-// );
 
 homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
@@ -139,18 +118,12 @@ addPostNavigator.navigationOptions = ({navigation}) => {
 const DrawerNavigation = createDrawerNavigator(
   {
     ProfileScreen: {
-      screen: ProfileComponent,
+      screen: profileNavigator,
       navigationOptions: {
         title: '',
         drawerIcon: <AntDesign name="left" size={20} />,
       },
     },
-  //   EditProfile: {
-  //     screen: EditProfileComponent,
-  //     navigationOptions: {
-  //       header: null,
-  //     },
-  //   },
   },
   {
     contentComponent: props => (
@@ -172,7 +145,7 @@ const DrawerNavigation = createDrawerNavigator(
                   {
                     text: 'Yes',
                     onPress: () => {
-                      AsyncStorage.clear();
+                      // AsyncStorage.clear();
                       props.navigation.navigate('LoginComponent');
                     },
                   },
@@ -250,7 +223,7 @@ const bottomTabNavigator = createBottomTabNavigator(
       },
     },
     Profile: {
-      screen: profileNavigator,
+      screen: DrawerNavigation,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <MaterialIcons name="person-outline" size={28} color={tintColor} />
@@ -260,7 +233,6 @@ const bottomTabNavigator = createBottomTabNavigator(
         },
       },
     },
-    // transfer : detailsNavigator
   },
   {
     initialRouteName: 'Home',
