@@ -84,6 +84,24 @@ homePageNavigator.navigationOptions = ({navigation}) => {
     tabBarVisible,
   };
 };
+
+
+profileNavigator.navigationOptions = ({navigation}) => {
+  let tabBarVisible;
+  if (navigation.state.routes.length > 1) {
+    navigation.state.routes.map(route => {
+      if (route.routeName === 'Edit') {
+        tabBarVisible = false;
+      } else {
+        tabBarVisible = true;
+      }
+    });
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
 const addPostNavigator = createStackNavigator(
   {
     AddPost: {

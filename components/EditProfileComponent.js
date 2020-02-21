@@ -24,7 +24,6 @@ class EditProfileComponent extends Component {
 }
 
 componentDidMount(){
-  check(Permissions);
   this.setState({
     image : this.props.image,
   })

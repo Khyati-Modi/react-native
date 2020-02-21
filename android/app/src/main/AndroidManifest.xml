@@ -2,6 +2,7 @@
   package="com.awesomeproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
       android:name=".MainApplication"
@@ -10,6 +11,12 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+      <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyAE2uNPzhJXNZATogQB6Et_c2GWNXlh9Ts"/>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

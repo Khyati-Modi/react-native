@@ -179,10 +179,15 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-maps')
-    implementation project(':react-native-permissions')
+    implementation project(':@react-native-community_geolocation')
+    implementation(project(':react-native-maps')){
+exclude group: 'com.google.android.gms', module: 'play-services-base'
+exclude group: 'com.google.android.gms', module: 'play-services-maps'
+}
+ provided "com.facebook.react:react-native:+" // From node_modules
+    implementation 'com.google.android.gms:play-services-base:+'
+    implementation 'com.google.android.gms:play-services-maps:+'
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.facebook.react:react-native:+"  // From node_modules
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
