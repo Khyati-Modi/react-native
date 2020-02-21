@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
+import {setProfileImage} from './Actions/profileImageAction';
 
 import {
   Dimensions,
@@ -30,15 +31,12 @@ class ProfileComponent extends Component {
   };
 
   componentDidMount() {
+    console.log("546372184710######################))483756478");
+    console.log(this.state.profilePicture);
+    console.log("546372184710######################))483756478");
     this.setState({isLoading: true});
     this.retrieveData();
     // this.getListfromApi();
-  }
-
-  componentWillMount(){
-    console.log('Called ***********************************************************************************');
-    this.retrieveData();
-    this.setState({profilePicture: constant.profilePicture});
   }
 
   constructor() {
@@ -51,7 +49,7 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture: constant.profilePicture,
+      profilePicture: ' ',
     };
   }
   retrieveData = async () => {
@@ -195,6 +193,9 @@ const mapDispatchToProps = dispatch => {
     setRecipeList: list => {
       dispatch(setRecipeList(list));
     },
+    setProfileImage: profileImage => {
+      dispatch(setProfileImage(profileImage));
+    },
   };
 };
 
@@ -202,6 +203,7 @@ const mapStateToProps = state => {
   return {
     recipeList: state.dataReducer.recipeList,
     token: state.userTokenReducer.token,
+    profilePicture: state.userProfileImageReducer.profilePhoto,
   };
 };
 

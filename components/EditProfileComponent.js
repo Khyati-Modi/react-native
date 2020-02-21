@@ -10,24 +10,18 @@ import {
   Button,
   Alert,
 } from 'react-native';
-import * as constant from './Constants';
-import * as Permission from 'react-native-permissions'
 import ImagePicker from 'react-native-image-picker';
-import { BackHandler } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import AsyncStorage from '@react-native-community/async-storage';
+import {connect} from 'react-redux';
+import {setProfileImage} from './Actions/profileImageAction';
 
 
-export default class EditProfileComponent extends Component {
+class EditProfileComponent extends Component {
   constructor() {
     super()
-    this.state = { image: constant.profilePicture,
+    this.state = { image: ' ',
     editPhotoTapped: null, }
-
 }
-  componentDidMount() {
-    console.log('in edit profile screen');
-  }
 
   chooseImage = () => {
     var options = {
@@ -52,9 +46,9 @@ export default class EditProfileComponent extends Component {
       }
     });
   }
+
   saveProfileImage = () => {
-    // constant.profilePicture = this.state.image;
-    AsyncStorage.setItem(constant.profilePicture, this.state.image);
+    this.props.setProfileImage(this.state.image);
     this.setState({
       editPhotoTapped: null,
     });
@@ -64,6 +58,7 @@ export default class EditProfileComponent extends Component {
       },
     ]);
   }
+
   render() {
     return (
       <SafeAreaView style={{backgroundColor: 'white'}}>
@@ -103,7 +98,6 @@ export default class EditProfileComponent extends Component {
   }
 
   backAction = () => {
-    console.log(this.state.editPhotoTapped);
     { this.state.editPhotoTapped && Alert.alert(
       'Unsaved changes',
       'You have unsaved changes. Are you sure you want to cancel?',
@@ -127,3 +121,22 @@ export default class EditProfileComponent extends Component {
   {!this.state.editPhotoTapped && this.props.navigation.navigate('Profile');} 
   }
  }
+ 
+ const mapDispatchToProps = dispatch => {
+  return {
+    setProfileImage: profilePhoto => {
+      dispatch(setProfileImage(profilePhoto));
+    },
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    image: state.userProfileImageReducer.profilePhoto,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditProfileComponent);
