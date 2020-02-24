@@ -76,9 +76,12 @@ export default class FavoriteComponent extends Component {
   btnFavoutiteClick(details) {
     fetch(constant.Remove_From_CookingList, {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         recipeId: details.recipeId,
-      },
+      }),
+      // body: {
+      //   recipeId: details.recipeId,
+      // },
       headers: {
         'Content-Type': 'application/json',
         Authorization: constant.User_Token,

@@ -1,15 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-did-mount-set-state */
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, ScrollView} from 'react-native';
+import {Text, View, SafeAreaView, ScrollView, Alert} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import * as constant from './Constants';
 
 import DetailsMenu from './DetailsMenu';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class RecipeDetail extends Component {
   componentDidMount() {
     this.setState({recipeDetail: this.props.navigation.state.params.details});
+    this.setState({inCookingList: this.props.navigation.state.params.details.inCookingList});
     this.setState({isLoading: true});
     const time = this.props.navigation.state.params.details.preparationTime.split(
       ' ',
@@ -23,6 +26,7 @@ export default class RecipeDetail extends Component {
       recipeDetail: [],
       preparationTime: '',
       preparationValue: '',
+      inCookingList: 0,
     };
   }
 
@@ -34,7 +38,9 @@ export default class RecipeDetail extends Component {
             <View style={{flexDirection: 'row', top: 8}}>
               <Text style={{fontSize: 25, fontWeight: 'bold'}}> {this.state.recipeDetail.recipeName}</Text>
               <View style={{flex: 0.97, alignItems: 'flex-end'}}>
+              <TouchableOpacity onPress={ recipeId => this.removeFromFavourite(this.state.recipeDetail.recipeId) }> 
               { this.state.recipeDetail.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
+              </TouchableOpacity>
                 {/* <FontAwesome name="bookmark-o" size={25} /> */}
               </View>
             </View>
@@ -66,4 +72,48 @@ export default class RecipeDetail extends Component {
       </SafeAreaView>
     );
   }
+
+  removeFromFavourite(recipeId) {
+    console.log('heya')
+    console.log(recipeId)
+      fetch(constant.Remove_From_CookingList, {
+        method: 'POST',
+        body: JSON.stringify({
+          recipeId: recipeId,
+        }),
+        // body: {
+        //   recipeId: details.recipeId,
+        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: constant.User_Token,
+        },
+      }).then(response => {
+        if (response.status === 200) {
+          return response.json().then(responseJSON => {
+            console.log('Deleted ');
+            console.log(responseJSON);
+            console.log('previous values*************************************************************** ');
+            console.log(this.state.inCookingList);
+            console.log('Post values*************************************************************** ');
+            {this.state.inCookingList == 0 ? this.setState({inCookingList: 1}) : this.setState({inCookingList: 0})}
+            console.log(this.state.inCookingList);
+            Alert.alert('Success', 'Remove from cooking list', [
+              {
+                text: 'Ok',
+              },
+            ]);
+            this.setState({isLoading: false});
+          });
+        } else {
+          console.log(response.body);
+          Alert.alert('Removed', 'Please try again later.', [
+            {
+              text: 'Ok',
+            },
+          ]);
+          this.setState({isLoading: false});
+        }
+      });
+    }
 }
