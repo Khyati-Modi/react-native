@@ -133,6 +133,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+         minSdkVersion 16
+        targetSdkVersion 28
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -179,15 +182,19 @@ android {
 }
 
 dependencies {
-    implementation project(':@react-native-community_geolocation')
+     def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
     implementation(project(':react-native-maps')){
 exclude group: 'com.google.android.gms', module: 'play-services-base'
 exclude group: 'com.google.android.gms', module: 'play-services-maps'
 }
  provided "com.facebook.react:react-native:+" // From node_modules
+ implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
     implementation 'com.google.android.gms:play-services-base:+'
     implementation 'com.google.android.gms:play-services-maps:+'
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-image-picker')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
