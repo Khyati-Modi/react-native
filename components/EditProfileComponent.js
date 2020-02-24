@@ -94,7 +94,9 @@ componentDidMount(){
                 source={{uri: this.state.image}}
               />
             </TouchableOpacity>
+            <TouchableOpacity style={{marginRight: 40, marginLeft: 40, top: 20}}>
             <Button title = "Change Profile " onPress={this.chooseImage} > </Button>
+            </TouchableOpacity>
           </View>
           <View style={{flex: 0.5}}>
           </View>
