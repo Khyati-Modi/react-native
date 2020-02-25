@@ -6,7 +6,7 @@ import MainScreen from './components/MainScreen';
 import {Provider} from 'react-redux';
 import store from './store';
 
-const AppContaior = createAppContainer(
+const AppContainer = createAppContainer(
   createAppContainer(
     createSwitchNavigator(
       {
@@ -30,7 +30,7 @@ const AppContaior = createAppContainer(
 export default function App() {
   return (
     <Provider store={store}>
-      <AppContaior />
+      <AppContainer />
     </Provider>
   );
 }

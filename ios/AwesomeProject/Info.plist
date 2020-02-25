@@ -57,6 +57,8 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string></string>
+		<string>LilyoftheValley.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

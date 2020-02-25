@@ -11,6 +11,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import ProfileComponent from './ProfileComponent';
 import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import RecipeList from './RecipeList';
 import LocationComponent from './LocationComponent';
@@ -19,6 +20,7 @@ import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
 import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
+import LoginComponent from './LoginComponent';
 
 
 export default class MainScreen extends Component {
@@ -133,8 +135,9 @@ const DrawerNavigation = createDrawerNavigator(
                   {
                     text: 'Yes',
                     onPress: () => {
-                      // AsyncStorage.clear();
-                      props.navigation.navigate('LoginComponent');
+                    // AsyncStorage.clear();
+                      props.navigation.goBack();
+                    // props.navigation.navigate('MainScreen');
                     },
                   },
                 ],
@@ -146,9 +149,6 @@ const DrawerNavigation = createDrawerNavigator(
         </SafeAreaView>
       </View>
     ),
-    drawerOpenRoute: 'DrawerOpen',
-    drawerCloseRoute: 'DrawerClose',
-    drawerToggleRoute: 'DrawerToggle',
     initialRouteName: 'ProfileScreen',
     drawerPosition: 'right',
     drawerType: 'slide',

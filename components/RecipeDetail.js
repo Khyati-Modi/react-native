@@ -12,15 +12,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class RecipeDetail extends Component {
   componentDidMount() {
     this.setState({recipeDetail: this.props.navigation.state.params.details});
-    this.props.navigation.addListener("didFocus", () => {
-      this.setState({inCookingList: this.props.navigation.state.params.details.inCookingList});
-    });
     this.setState({isLoading: true});
     const time = this.props.navigation.state.params.details.preparationTime.split(
       ' ',
     );
     this.setState({preparationTime: time[0]});
     this.setState({preparationValue: time[1]});
+    this.props.navigation.addListener("didFocus", () => {
+      this.setState({inCookingList: this.props.navigation.state.params.details.inCookingList});
+    });
   }
   constructor() {
     super();
@@ -93,6 +93,7 @@ AddOrRemoveFromFavoutites(recipeId) {
           return response.json().then(responseJSON => {
             console.log(responseJSON);
             {this.state.inCookingList == 0 ? this.setState({inCookingList: 1}) : this.setState({inCookingList: 0})}
+            this.props.navigation.state.params.details.inCookingList = 0
             Alert.alert('Success', 'Remove from cooking list', [
               {
                 text: 'Ok',
@@ -127,6 +128,7 @@ AddOrRemoveFromFavoutites(recipeId) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
           {this.state.inCookingList == 0 ? this.setState({inCookingList: 1}) : this.setState({inCookingList: 0})}
+          this.props.navigation.state.params.details.inCookingList = 1
           this.setState({isLoading: false});
         });
       } else {
