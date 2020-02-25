@@ -1,23 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-import {View, Text, SafeAreaView, TouchableOpacity, Alert} from 'react-native';
+import ProfileComponent from './ProfileComponent';
+import {DrawerItems} from 'react-navigation-drawer';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import RecipeList from './RecipeList';
-import ProfileComponent from './ProfileComponent';
-import AddRecipeComponent from './AddRecipeComponent';
+import LocationComponent from './LocationComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
-import {DrawerItems} from 'react-navigation-drawer';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import EditProfileComponent from './EditProfileComponent';
+import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
+import LoginComponent from './LoginComponent';
+
 
 export default class MainScreen extends Component {
   render() {
@@ -45,6 +49,27 @@ const homePageNavigator = createStackNavigator(
   },
 );
 
+const profileNavigator = createStackNavigator(
+  {
+    Profile: {
+      screen: ProfileComponent,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Edit: {
+      screen: EditProfileComponent,
+      navigationOptions: ({navigation}) => ({
+        title: null,
+        header: null,
+      }),
+    },
+  },
+  {
+    mode: 'card',
+  },
+);
+
 homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
@@ -61,25 +86,13 @@ homePageNavigator.navigationOptions = ({navigation}) => {
     tabBarVisible,
   };
 };
-const addPostNavigator = createStackNavigator(
-  {
-    AddPost: {
-      screen: AddRecipeComponent,
-      navigationOptions: ({navigation}) => ({
-        title: 'Add Post',
-      }),
-    },
-  },
-  {
-    mode: 'card',
-  },
-);
 
-addPostNavigator.navigationOptions = ({navigation}) => {
+
+profileNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
-  if (navigation.state.routes.length > 0) {
+  if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
-      if (route.routeName === 'AddPost') {
+      if (route.routeName === 'Edit') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;
@@ -95,7 +108,7 @@ addPostNavigator.navigationOptions = ({navigation}) => {
 const DrawerNavigation = createDrawerNavigator(
   {
     ProfileScreen: {
-      screen: ProfileComponent,
+      screen: profileNavigator,
       navigationOptions: {
         title: '',
         drawerIcon: <AntDesign name="left" size={20} />,
@@ -122,8 +135,9 @@ const DrawerNavigation = createDrawerNavigator(
                   {
                     text: 'Yes',
                     onPress: () => {
-                      AsyncStorage.clear();
-                      props.navigation.navigate('LoginComponent');
+                    // AsyncStorage.clear();
+                      props.navigation.goBack();
+                    // props.navigation.navigate('MainScreen');
                     },
                   },
                 ],
@@ -135,9 +149,6 @@ const DrawerNavigation = createDrawerNavigator(
         </SafeAreaView>
       </View>
     ),
-    drawerOpenRoute: 'DrawerOpen',
-    drawerCloseRoute: 'DrawerClose',
-    drawerToggleRoute: 'DrawerToggle',
     initialRouteName: 'ProfileScreen',
     drawerPosition: 'right',
     drawerType: 'slide',
@@ -178,10 +189,10 @@ const bottomTabNavigator = createBottomTabNavigator(
       },
     },
     Add: {
-      screen: AddRecipeComponent,
+      screen: LocationComponent,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
-          <MaterialIcons name="add" size={30} color={tintColor} />
+          <Entypo name="location" size={30} color={tintColor} />
         ),
         tabBarLabel: () => {
           return null;
@@ -210,7 +221,6 @@ const bottomTabNavigator = createBottomTabNavigator(
         },
       },
     },
-    // transfer : detailsNavigator
   },
   {
     initialRouteName: 'Home',

@@ -35,6 +35,11 @@ target 'AwesomeProject' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
+
   target 'AwesomeProjectTests' do
     inherit! :search_paths
     # Pods for testing

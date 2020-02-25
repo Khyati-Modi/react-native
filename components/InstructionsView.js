@@ -72,7 +72,7 @@ export default class InstructionsView extends Component {
     return (
       //View to show when list is empty
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{textAlign: 'center', fontSize: 30}}>
+        <Text style={{alignItems: 'center', textAlign: 'center', fontSize: 20}}>
           No Instruction Found
         </Text>
       </View>

@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-did-mount-set-state */
-/* eslint-disable no-undef */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
+import {setProfileImage} from './Actions/profileImageAction';
 
 import {
   Dimensions,
@@ -19,10 +19,9 @@ import {
   SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
-import LoadingIndicator from './LoadingIndicator';
+// import LoadingIndicator from './LoadingIndicator';
 
 class ProfileComponent extends Component {
   onRefresh = () => {
@@ -31,23 +30,25 @@ class ProfileComponent extends Component {
   };
 
   componentDidMount() {
-    this.setState({isLoading: true});
+    this.props.navigation.addListener("didFocus", () => {
+      this.setState({profilePicture: this.props.profilePicture});
+    });
+    
+    this.setState({isLoading: true, profilePicture: this.props.profilePicture});
     this.retrieveData();
-    // this.getListfromApi();
   }
 
   constructor() {
     super();
     this.state = {
-      UserName: '',
+      UserName: null,
       checked: false,
       isLoading: false,
       refreshing: false,
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRKST55Mx58WF4twW6nV77TLqj5BTA5DUHhmhB5sEmI59AyAJ0R',
+      profilePicture: 'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
     };
   }
   retrieveData = async () => {
@@ -62,7 +63,7 @@ class ProfileComponent extends Component {
   };
   render() {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={styles.titleView}>
           <Text> {this.state.UserName} </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
@@ -103,7 +104,9 @@ class ProfileComponent extends Component {
         </View>
 
         <View style={styles.EditView}>
-          <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
+          <TouchableOpacity onPress={this.goToEditView}>
+            <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
+          </TouchableOpacity>
         </View>
         {/* <LoadingIndicator isLoading={this.state.isLoading} /> */}
         <FlatList
@@ -149,30 +152,8 @@ class ProfileComponent extends Component {
     );
   }
 
-  getListfromApi = () => {
-    fetch(constant.All_Recipe_List, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line prettier/prettier
-        'Authorization': this.props.token,
-      },
-    }).then(response => {
-      if (response.status === 200) {
-        return response.json().then(responseJSON => {
-          this.setState({recipesList: responseJSON});
-          this.setState({isLoading: false});
-        });
-      } else {
-        console.log(response.body);
-        Alert.alert('Error', 'Please try again later.', [
-          {
-            text: 'Ok',
-          },
-        ]);
-        this.setState({isLoading: false});
-      }
-    });
+  goToEditView = () => {
+    this.props.navigation.navigate('Edit');
   };
 
   onPostClicked = item => {
@@ -185,15 +166,17 @@ const mapDispatchToProps = dispatch => {
     setRecipeList: list => {
       dispatch(setRecipeList(list));
     },
+    setProfileImage: profileImage => {
+      dispatch(setProfileImage(profileImage));
+    },
   };
 };
 
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
     recipeList: state.dataReducer.recipeList,
     token: state.userTokenReducer.token,
+    profilePicture: state.userProfileImageReducer.profilePhoto,
   };
 };
 
