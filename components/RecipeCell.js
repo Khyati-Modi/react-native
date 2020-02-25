@@ -69,6 +69,10 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={{top: 4, left: 10, bottom: 15}}>
+      <Text style={{fontWeight: 'bold', fontSize: 18}}>
+          {' '}
+          {props.itemList.recipeName}
+        </Text>
         <Text>
           {' '}
           You can serve this recipe to {props.itemList.serves} people

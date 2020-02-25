@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {SafeAreaView, FlatList, View, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, FlatList, View, Text, StyleSheet, RefreshControl} from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
 import * as constant from './Constants';
@@ -8,14 +8,24 @@ import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
 
 class RecipeList extends Component {
-  state = {itemList: []};
-
   constructor() {
     super();
+    this.state = {
+      itemList: [],
+      refreshing: false,
+      setRefreshing: false,
+    };
   }
+
   componentDidMount() {
     this.fetchRecipeList();
   }
+
+  onRefresh = () => {
+    this.setState({setRefreshing: true});
+    this.fetchRecipeList();
+  };
+
   render() {
     return (
       <SafeAreaView style={{backgroundColor: 'white'}}>
@@ -27,6 +37,12 @@ class RecipeList extends Component {
           </View>
         </View>
         <FlatList
+        refreshControl={
+          <RefreshControl
+          refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
           style={styles.flatlistStyle}
           data={this.state.itemList}
           renderItem={({item}) => (

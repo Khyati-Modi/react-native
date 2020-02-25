@@ -31,30 +31,24 @@ class ProfileComponent extends Component {
 
   componentDidMount() {
     this.props.navigation.addListener("didFocus", () => {
-      // user has navigated to this screen
       this.setState({profilePicture: this.props.profilePicture});
     });
-
-    this.props.navigation.addListener("didBlur", () => {
-    });
     
-    console.log(this.state.profilePicture);
     this.setState({isLoading: true, profilePicture: this.props.profilePicture});
     this.retrieveData();
-    // this.getListfromApi();
   }
 
   constructor() {
     super();
     this.state = {
-      UserName: '',
+      UserName: null,
       checked: false,
       isLoading: false,
       refreshing: false,
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture: '',
+      profilePicture: 'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
     };
   }
   retrieveData = async () => {
@@ -157,32 +151,6 @@ class ProfileComponent extends Component {
       </SafeAreaView>
     );
   }
-
-  getListfromApi = () => {
-    fetch(constant.All_Recipe_List, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // eslint-disable-next-line prettier/prettier
-        'Authorization': this.props.token,
-      },
-    }).then(response => {
-      if (response.status === 200) {
-        return response.json().then(responseJSON => {
-          this.setState({recipesList: responseJSON});
-          this.setState({isLoading: false});
-        });
-      } else {
-        console.log(response.body);
-        Alert.alert('Error', 'Please try again later.', [
-          {
-            text: 'Ok',
-          },
-        ]);
-        this.setState({isLoading: false});
-      }
-    });
-  };
 
   goToEditView = () => {
     this.props.navigation.navigate('Edit');

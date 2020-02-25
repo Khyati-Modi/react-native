@@ -5,8 +5,7 @@ import * as Permission from 'react-native-permissions';
 import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-
-export default class AddRecipeComponent extends Component {
+export default class LocationComponent extends Component {
   constructor() {
     super();
     this.state = {

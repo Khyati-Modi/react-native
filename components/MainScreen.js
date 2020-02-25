@@ -13,7 +13,7 @@ import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import RecipeList from './RecipeList';
-import AddRecipeComponent from './AddRecipeComponent';
+import LocationComponent from './LocationComponent';
 import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
@@ -91,36 +91,6 @@ profileNavigator.navigationOptions = ({navigation}) => {
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
       if (route.routeName === 'Edit') {
-        tabBarVisible = false;
-      } else {
-        tabBarVisible = true;
-      }
-    });
-  }
-
-  return {
-    tabBarVisible,
-  };
-};
-const addPostNavigator = createStackNavigator(
-  {
-    AddPost: {
-      screen: AddRecipeComponent,
-      navigationOptions: ({navigation}) => ({
-        title: 'Add Post',
-      }),
-    },
-  },
-  {
-    mode: 'card',
-  },
-);
-
-addPostNavigator.navigationOptions = ({navigation}) => {
-  let tabBarVisible;
-  if (navigation.state.routes.length > 0) {
-    navigation.state.routes.map(route => {
-      if (route.routeName === 'AddPost') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;
@@ -219,7 +189,7 @@ const bottomTabNavigator = createBottomTabNavigator(
       },
     },
     Add: {
-      screen: AddRecipeComponent,
+      screen: LocationComponent,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Entypo name="location" size={30} color={tintColor} />
