@@ -12,7 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default function FavoriteCell(props) {
   return (
-    <SafeAreaView style={styles.mainView}>
+    <SafeAreaView style={styles.safeView}>
       <View style={styles.mainView}>
         <View style={styles.recipeImageView}>
           {/* <TouchableOpacity onPress={() => {props.onClick(props.itemList)}}> */}
@@ -45,13 +45,14 @@ export default function FavoriteCell(props) {
 }
 
 const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+  },
   mainView: {
     top: 18,
     height: 180,
-    flex: 1,
-    bottom: 20,
-    marginEnd: 4,
-    left: 4,
+    marginLeft: 4,
+    marginRight: 4,
   },
   recipeImageView: {
     height: 160,

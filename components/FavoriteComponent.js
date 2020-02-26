@@ -46,6 +46,7 @@ export default class FavoriteComponent extends Component {
             </Text>
           </View>
           <FlatList
+            style={{marginBottom: 90}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}

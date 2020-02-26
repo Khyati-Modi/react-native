@@ -24,6 +24,7 @@ export default class SearchComponent extends Component {
       refreshing: false,
       setRefreshing: false,
       search: '',
+      initialState: true,
     };
   }
 
@@ -35,6 +36,7 @@ export default class SearchComponent extends Component {
             <TextInput
               style={{width: '90%', padding: 10}}
               placeholder="Search any recipe here "
+              placeholderTextColor="black"
               value={this.state.search}
               onChangeText={search => this.setState({search})}
               returnKeyType="search"
@@ -107,9 +109,11 @@ export default class SearchComponent extends Component {
     return (
       //View to show when list is empty
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{textAlign: 'center', fontSize: 20}}>
-          No Recipes Found
-        </Text>
+        {!this.state.initialState && (
+          <Text style={{textAlign: 'center', fontSize: 20}}>
+            No Recipes Found
+          </Text>
+        )}
       </View>
     );
   };
@@ -119,6 +123,7 @@ export default class SearchComponent extends Component {
   };
 
   onSearchClick = () => {
+    this.setState({initialState: false});
     const apiURL = constant.Search_Recipe_API + this.state.search;
     fetch(apiURL, {
       method: 'GET',
@@ -145,7 +150,7 @@ export default class SearchComponent extends Component {
   };
 
   onClear = () => {
-    this.setState({searchResult: '', search: ''});
+    this.setState({searchResult: '', search: '', initialState: true});
   };
 }
 const styles = StyleSheet.create({
