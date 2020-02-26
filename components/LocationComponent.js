@@ -89,9 +89,6 @@ render() {
                     latitude:  23.025648, 
                     longitude:  72.476796
                   },
-                  
-
-
                 ]}>
             </Polyline>
             <Marker

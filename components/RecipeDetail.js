@@ -25,6 +25,7 @@ export default class RecipeDetail extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: false,
       recipeDetail: [],
       preparationTime: '',
       preparationValue: '',
@@ -76,6 +77,7 @@ export default class RecipeDetail extends Component {
   }
 
 AddOrRemoveFromFavoutites(recipeId) {
+  this.setState({isLoading: true})
   this.state.inCookingList == 1 ? this.removeFromFavourite(this.state.recipeDetail.recipeId)  : this.AddToFavourite(this.state.recipeDetail.recipeId)
 }
   removeFromFavourite(recipeId) {

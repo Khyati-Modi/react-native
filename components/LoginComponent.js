@@ -12,11 +12,15 @@ import {
 import * as constant from './Constants';
 import {setToken} from './Actions/userTokenAction';
 import {connect} from 'react-redux';
+import LoadingIndicator from './LoadingIndicator';
 
 class LoginComponent extends Component {
   constructor() {
     super();
-    this.state = {email: 'jm1@example.com', password: 'jay@123', bgImage: 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe'};
+    this.state = {isLoading: false, email: '', password: '', bgImage: 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe'};
+  }
+  componentDidMount(){
+    
   }
 
   render() {
@@ -28,7 +32,7 @@ class LoginComponent extends Component {
           <View style={styles.topView}>
             <Text style={styles.loginTitle}> Login </Text>
           </View>
-
+          <LoadingIndicator isLoading={this.state.isLoading} />
           <View style={styles.middleView}>
             <TextInput
               keyboardType="email-address"
@@ -59,6 +63,7 @@ class LoginComponent extends Component {
   }
 
   onLogin = () => {
+    this.setState({isLoading: true})
     fetch('http://35.160.197.175:3006/api/v1/user/login', {
       method: 'POST',
       headers: {
@@ -74,7 +79,7 @@ class LoginComponent extends Component {
           this.props.setToken(responseJSON.token);
           this.goToHomePage;
           this.storeData(responseJSON);
-
+          this.setState({isLoading: false})
           Alert.alert('Success', 'Successfully logged in', [
             {
               text: 'Ok',

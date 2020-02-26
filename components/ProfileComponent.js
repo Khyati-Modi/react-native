@@ -21,7 +21,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
-// import LoadingIndicator from './LoadingIndicator';
+import LoadingIndicator from './LoadingIndicator';
 
 class ProfileComponent extends Component {
   onRefresh = () => {
@@ -60,6 +60,7 @@ class ProfileComponent extends Component {
     } catch (error) {
       console.log(error);
     }
+    this.setState({isLoading: false});
   };
   render() {
     return (
@@ -108,8 +109,8 @@ class ProfileComponent extends Component {
             <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
           </TouchableOpacity>
         </View>
-        {/* <LoadingIndicator isLoading={this.state.isLoading} /> */}
-        <FlatList
+        <LoadingIndicator isLoading={this.state.isLoading} />
+        <FlatList style={{marginBottom: 230}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

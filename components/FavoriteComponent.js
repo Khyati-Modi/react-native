@@ -13,7 +13,6 @@ import FavoriteCell from './FavouriteCell';
 
 export default class FavoriteComponent extends Component {
   componentDidMount() {
-    this.setState({isLoading: true});
     this.getFavRecipes();
   }
   onRefresh = () => {
@@ -63,17 +62,30 @@ export default class FavoriteComponent extends Component {
               />
             )}
             keyExtractor={itemList => itemList.recipeId}
+            ListEmptyComponent={this.ListEmpty}
           />
         </View>
       </SafeAreaView>
     );
   }
 
+  ListEmpty = () => {
+    return (
+      //View to show when list is empty
+      <View style={{justifyContent: 'center', alignContent: 'center', width: '100%', height: 500}}>
+        <Text style={{alignItems: 'center', textAlign: 'center', fontSize: 15}}>
+          Oops! No Recipes added into favourite
+        </Text>
+      </View>
+    );
+  };
+
   separator = () => {
-    return <View style={{height: 8, width: '100%'}} />;
+    return <View style={{height: 4, width: '100%'}} />;
   };
 
   btnFavoutiteClick(details) {
+    this.setState({isLoading: true});
     fetch(constant.Remove_From_CookingList, {
       method: 'POST',
       body: JSON.stringify({
@@ -89,8 +101,6 @@ export default class FavoriteComponent extends Component {
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log('Deleted ');
-          console.log(responseJSON);
           this.getFavRecipes();
           Alert.alert('Success', 'Remove from cooking list', [
             {
@@ -112,6 +122,7 @@ export default class FavoriteComponent extends Component {
   }
 
   getFavRecipes = () => {
+    this.setState({isLoading: true});
     fetch(constant.Cooking_List_API, {
       method: 'GET',
       headers: {

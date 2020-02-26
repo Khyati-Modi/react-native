@@ -16,9 +16,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
 
 export default class SearchComponent extends Component {
-  componentDidMount() {
-    // this.setState({search: ' '});
-  }
   constructor() {
     super();
     this.state = {
@@ -40,13 +37,16 @@ export default class SearchComponent extends Component {
               placeholder="Search any recipe here "
               value={this.state.search}
               onChangeText={search => this.setState({search})}
+              returnKeyType='search'
+              autoFocus={true}
+              onSubmitEditing={this.onSearchClick}
             />
             <TouchableOpacity
               style={{alignSelf: 'center'}}
-              onPress={() => this.onSearchClick()}>
+              onPress={() => this.onClear()}>
               <AntDesign
                 style={{alignItems: 'flex-end'}}
-                name="search1"
+                name="close"
                 color="#005CFF"
                 size={20}
               />
@@ -119,7 +119,6 @@ export default class SearchComponent extends Component {
   };
 
   onSearchClick = () => {
-    console.log(this.state.search);
     const apiURL = constant.Search_Recipe_API + this.state.search;
     fetch(apiURL, {
       method: 'GET',
@@ -131,7 +130,6 @@ export default class SearchComponent extends Component {
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log('ssucessss!');
           this.setState({searchResult: responseJSON});
           this.setState({isLoading: false});
         });
@@ -144,6 +142,10 @@ export default class SearchComponent extends Component {
         ]);
       }
     });
+  };
+
+  onClear = () => {  
+    this.setState({searchResult: '',search: ''})
   };
 }
 const styles = StyleSheet.create({

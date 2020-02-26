@@ -25,7 +25,7 @@ export default function FavoriteCell(props) {
           <AntDesign name="heart" size= {20} color='red' />  
           </TouchableOpacity>
         </TouchableOpacity>
-        <Text style={{fontSize: 20, alignSelf: 'center', height: 30}}>  {props.itemList.recipeName} </Text>
+        <Text style={{fontSize: 15, alignSelf: 'center', height: 30}}>  {props.itemList.recipeName} </Text>
       </View>
     </View>
     </SafeAreaView>
@@ -35,14 +35,14 @@ export default function FavoriteCell(props) {
 const styles = StyleSheet.create({
   mainView: {
     top: 18,
-    height: 250,
+    height: 180,
     flex: 1,
     bottom: 20,
     marginEnd: 4,
     left: 4,
   },
   recipeImageView: {
-    height: 200,
+    height: 160,
     width: '100%',
     justifyContent: 'center',
   },

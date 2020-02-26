@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {SafeAreaView, FlatList, View, Text, StyleSheet, RefreshControl} from 'react-native';
+import {SafeAreaView, FlatList, View, Text, StyleSheet, RefreshControl,} from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
 import * as constant from './Constants';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
+import LoadingIndicator from './LoadingIndicator';
 
 class RecipeList extends Component {
   constructor() {
