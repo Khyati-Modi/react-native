@@ -36,7 +36,6 @@
 		BEF1F6CFAD98D6659C12A3FA /* libPods-AwesomeProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F297E879DEA20D5306EB51DF /* libPods-AwesomeProject.a */; };
 		C3E1967532F346119CB8C91A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AED1AD5F4D044FA0AACDBC79 /* MaterialIcons.ttf */; };
 		EB402E34CD104C6289EA2F68 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD0299BE5D664A23A44599E5 /* SimpleLineIcons.ttf */; };
-		0337C70ABAD0434396B5D8B8 /* LilyoftheValley.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81E1841CE4A14441832C95BD /* LilyoftheValley.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,7 +99,6 @@
 		EFBED6DF18E8BA8422CC427A /* Pods-AwesomeProject-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOSTests/Pods-AwesomeProject-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		F297E879DEA20D5306EB51DF /* libPods-AwesomeProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AwesomeProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F33DE18562F3C9517816135B /* Pods-AwesomeProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject.release.xcconfig"; path = "Target Support Files/Pods-AwesomeProject/Pods-AwesomeProject.release.xcconfig"; sourceTree = "<group>"; };
-		81E1841CE4A14441832C95BD /* LilyoftheValley.ttf */ = {isa = PBXFileReference; name = "LilyoftheValley.ttf"; path = "../assets/fonts/LilyoftheValley.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +215,6 @@
 				8837DECB31D64327AD906F7C /* Octicons.ttf */,
 				DD0299BE5D664A23A44599E5 /* SimpleLineIcons.ttf */,
 				890A2FC3905C466BB501F2C5 /* Zocial.ttf */,
-				81E1841CE4A14441832C95BD /* LilyoftheValley.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -413,7 +410,6 @@
 				0EA1C2A41F674576B4759086 /* Octicons.ttf in Resources */,
 				EB402E34CD104C6289EA2F68 /* SimpleLineIcons.ttf in Resources */,
 				224093357E62467DA522FD77 /* Zocial.ttf in Resources */,
-				0337C70ABAD0434396B5D8B8 /* LilyoftheValley.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,11 +14,7 @@ export default function LoadingIndicator(props) {
           alignContent: 'center',
           alignSelf: 'center',
         }}>
-        <ActivityIndicator
-          size="large"
-          color="black"
-          style={{flex: 1, backfaceVisibility: false}}
-        />
+        <ActivityIndicator size="large" color="black" style={{flex: 1}} />
       </View>
     );
   } else {

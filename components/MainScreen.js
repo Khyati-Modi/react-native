@@ -20,6 +20,7 @@ import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
+import AddRecipeComponent from './AddRecipeComponent';
 import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
 
 export default class MainScreen extends Component {
@@ -42,6 +43,9 @@ const homePageNavigator = createStackNavigator(
         title: null,
       }),
     },
+    AddRecipe: {
+      screen: AddRecipeComponent,
+    },
   },
   {
     mode: 'card',
@@ -58,10 +62,9 @@ const profileNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileComponent,
-      navigationOptions: ({navigation}) => ({
-        title: null,
+      navigationOptions: {
         header: null,
-      }),
+      },
     },
   },
   {
@@ -73,7 +76,7 @@ homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
-      if (route.routeName === 'Details') {
+      if (route.routeName === 'Details' || route.routeName === 'AddRecipe') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;

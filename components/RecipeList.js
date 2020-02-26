@@ -10,9 +10,11 @@ import {
 } from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 import * as constant from './Constants';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class RecipeList extends Component {
   constructor() {
@@ -40,7 +42,9 @@ class RecipeList extends Component {
           <Feather name="camera" size={30} />
           <Text style={styles.appNameStyle}> Instagram </Text>
           <View style={{flex: 1, alignItems: 'flex-end'}}>
-            <Feather name="send" size={25} />
+            <TouchableOpacity onPress={this.goToAddRecipe}>
+              <Entypo name="add-to-list" size={30} />
+            </TouchableOpacity>
           </View>
         </View>
         <FlatList
@@ -64,6 +68,10 @@ class RecipeList extends Component {
       </SafeAreaView>
     );
   }
+  goToAddRecipe = () => {
+    console.log('inside add recipe');
+    this.props.navigation.navigate('AddRecipe');
+  };
   fetchRecipeList = () => {
     fetch(constant.All_Recipe_List, {
       method: 'GET',
