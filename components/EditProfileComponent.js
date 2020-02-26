@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  Dimensions,
   Button,
   Alert,
 } from 'react-native';
@@ -14,20 +13,18 @@ import ImagePicker from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
 import {setProfileImage} from './Actions/profileImageAction';
-import Permissions from 'react-native-permissions';
 
 class EditProfileComponent extends Component {
   constructor() {
-    super()
-    this.state = { image: ' ',
-    editPhotoTapped: null, }
-}
+    super();
+    this.state = {image: ' ', editPhotoTapped: null};
+  }
 
-componentDidMount(){
-  this.setState({
-    image : this.props.image,
-  })
-}
+  componentDidMount() {
+    this.setState({
+      image: this.props.image,
+    });
+  }
 
   chooseImage = () => {
     var options = {
@@ -51,86 +48,111 @@ componentDidMount(){
         });
       }
     });
-  }
+  };
 
   saveProfileImage = () => {
     this.props.setProfileImage(this.state.image);
     this.setState({
       editPhotoTapped: null,
     });
-    Alert.alert('','Profile Image updated successfully', [
+    Alert.alert('', 'Profile Image updated successfully', [
       {
         text: 'Ok',
       },
     ]);
-  }
+  };
 
   render() {
     return (
       <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={{width: '100%', height: '100%'}}>
-        <View style={{height: 44, width: '100%', flexDirection: 'row'}}> 
-        <View style= {{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity style= {{flexDirection: 'row', alignItems: 'center'}} onPress={this.backAction}> 
-          <AntDesign name="left" size={20} color='#147efb' style={{padding: 4}}> </AntDesign>
-          <Text style={{color: '#147efb', fontSize: 20}}>Profile</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <TouchableOpacity style={{marginRight: 8,justifyContent:'center',alignItems:'center',height:'100%'}} onPress={this.saveProfileImage}>
-            <Text style={{color: '#147efb', fontSize: 20, alignSelf: 'center'}}>Save</Text>
-         </TouchableOpacity>
-        </View>
-        </View>
+          <View style={{height: 44, width: '100%', flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}
+                onPress={this.backAction}>
+                <AntDesign
+                  name="left"
+                  size={20}
+                  color="#147efb"
+                  style={{padding: 4}}>
+                  {' '}
+                </AntDesign>
+                <Text style={{color: '#147efb', fontSize: 20}}>Profile</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <TouchableOpacity
+                style={{
+                  marginRight: 8,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '100%',
+                }}
+                onPress={this.saveProfileImage}>
+                <Text
+                  style={{color: '#147efb', fontSize: 20, alignSelf: 'center'}}>
+                  Save
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           <View
             style={{
               flex: 0.5,
               justifyContent: 'center',
             }}>
             <TouchableOpacity
-              style={{ width: '35%',height: '40%',alignSelf: 'center',borderRadius: 50}}>
+              style={{
+                width: '35%',
+                height: '40%',
+                alignSelf: 'center',
+                borderRadius: 50,
+              }}>
               <Image
-                style={{ width: '100%',height: '100%',borderRadius: 50}}
+                style={{width: '100%', height: '100%', borderRadius: 50}}
                 source={{uri: this.state.image}}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight: 40, marginLeft: 40, top: 20}}>
-            <Button title = "Change Profile " onPress={this.chooseImage} > </Button>
+            <TouchableOpacity
+              style={{marginRight: 40, marginLeft: 40, top: 20}}>
+              <Button title="Change Profile " onPress={this.chooseImage}>
+                {' '}
+              </Button>
             </TouchableOpacity>
           </View>
-          <View style={{flex: 0.5}}>
-          </View>
+          <View style={{flex: 0.5}} />
         </View>
       </SafeAreaView>
     );
   }
 
   backAction = () => {
-    { this.state.editPhotoTapped && Alert.alert(
-      'Unsaved changes',
-      'You have unsaved changes. Are you sure you want to cancel?',
-      [
-        {
-          text: 'No',
-          onPress: () => {
-            return null;
+    this.state.editPhotoTapped &&
+      Alert.alert(
+        'Unsaved changes',
+        'You have unsaved changes. Are you sure you want to cancel?',
+        [
+          {
+            text: 'No',
+            onPress: () => {
+              return null;
+            },
           },
-        },
-        {
-          text: 'Yes',
-          onPress: () => {
-            this.props.navigation.navigate('Profile');
+          {
+            text: 'Yes',
+            onPress: () => {
+              this.props.navigation.navigate('Profile');
+            },
           },
-        },
-      ],
-      {cancelable: false},
-    )
-  }
-  {!this.state.editPhotoTapped && this.props.navigation.navigate('Profile');} 
-  }
- }
- 
- const mapDispatchToProps = dispatch => {
+        ],
+        {cancelable: false},
+      );
+    !this.state.editPhotoTapped && this.props.navigation.navigate('Profile');
+  };
+}
+
+const mapDispatchToProps = dispatch => {
   return {
     setProfileImage: profilePhoto => {
       dispatch(setProfileImage(profilePhoto));

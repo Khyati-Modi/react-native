@@ -4,7 +4,6 @@ const dataReducer = (
   },
   action,
 ) => {
-
   switch (action.type) {
     case 'SET_RECIPE_LIST':
       return {recipeList: action.recipeList};

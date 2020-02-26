@@ -8,7 +8,7 @@ export const Cooking_List_API =
   'http://35.160.197.175:3006/api/v1/recipe/cooking-list';
 export const Remove_From_CookingList =
   'http://35.160.197.175:3006/api/v1/recipe/rm-from-cooking-list';
-  export const Add_To_CookingList = 
+export const Add_To_CookingList =
   'http://35.160.197.175:3006/api/v1/recipe/add-to-cooking-list';
 export const Add_Image_API =
   'http://35.160.197.175:3006/api/v1/recipe/add-update-recipe-photo';

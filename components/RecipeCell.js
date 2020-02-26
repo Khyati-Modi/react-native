@@ -44,8 +44,12 @@ export default function RecipeCell(props) {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>
-        <TouchableOpacity style={styles.leftActionButton}>
-          { props.itemList.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
+          <TouchableOpacity style={styles.leftActionButton}>
+            {props.itemList.inCookingList === 1 ? (
+              <AntDesign name="heart" size={25} color="red" />
+            ) : (
+              <AntDesign name="hearto" size={25} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity>
             <Image
@@ -69,7 +73,7 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={{top: 4, left: 10, bottom: 15}}>
-      <Text style={{fontWeight: 'bold', fontSize: 18}}>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>
           {' '}
           {props.itemList.recipeName}
         </Text>

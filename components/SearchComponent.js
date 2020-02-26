@@ -37,7 +37,7 @@ export default class SearchComponent extends Component {
               placeholder="Search any recipe here "
               value={this.state.search}
               onChangeText={search => this.setState({search})}
-              returnKeyType='search'
+              returnKeyType="search"
               autoFocus={true}
               onSubmitEditing={this.onSearchClick}
             />
@@ -144,8 +144,8 @@ export default class SearchComponent extends Component {
     });
   };
 
-  onClear = () => {  
-    this.setState({searchResult: '',search: ''})
+  onClear = () => {
+    this.setState({searchResult: '', search: ''});
   };
 }
 const styles = StyleSheet.create({

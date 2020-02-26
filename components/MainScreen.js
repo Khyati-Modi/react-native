@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -21,8 +21,6 @@ import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
 import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
-import LoginComponent from './LoginComponent';
-
 
 export default class MainScreen extends Component {
   render() {
@@ -87,7 +85,6 @@ homePageNavigator.navigationOptions = ({navigation}) => {
     tabBarVisible,
   };
 };
-
 
 profileNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;

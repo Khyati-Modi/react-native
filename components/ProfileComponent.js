@@ -7,7 +7,6 @@ import {setProfileImage} from './Actions/profileImageAction';
 
 import {
   Dimensions,
-  Alert,
   TouchableWithoutFeedback,
   FlatList,
   RefreshControl,
@@ -30,10 +29,10 @@ class ProfileComponent extends Component {
   };
 
   componentDidMount() {
-    this.props.navigation.addListener("didFocus", () => {
+    this.props.navigation.addListener('didFocus', () => {
       this.setState({profilePicture: this.props.profilePicture});
     });
-    
+
     this.setState({isLoading: true, profilePicture: this.props.profilePicture});
     this.retrieveData();
   }
@@ -48,7 +47,8 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture: 'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
+      profilePicture:
+        'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
     };
   }
   retrieveData = async () => {
@@ -110,7 +110,8 @@ class ProfileComponent extends Component {
           </TouchableOpacity>
         </View>
         <LoadingIndicator isLoading={this.state.isLoading} />
-        <FlatList style={{marginBottom: 230}}
+        <FlatList
+          style={{marginBottom: 230}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

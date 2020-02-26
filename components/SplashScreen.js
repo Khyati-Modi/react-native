@@ -12,14 +12,11 @@ export default class SplashScreen extends Component {
     this.retrieveData();
     setTimeout(() => {
       if (this.state.name === '') {
-        // const {navigate} = this.props.navigation;
         this.props.navigation.navigate('LoginComponent');
       } else {
-        // const {navigate} = this.props.navigation;
         this.props.navigation.navigate('MainScreen');
       }
     }, 2000);
-    // this.props.navigation.navigate('LoginComponent');
   }
   render() {
     return (
@@ -44,13 +41,10 @@ export default class SplashScreen extends Component {
         this.setState({name: value});
       }
     } catch (error) {
-      // Error retrieving data
       console.log(error);
     }
   };
 }
-
-//export default SplashScreen
 
 const styles = StyleSheet.create({
   container: {

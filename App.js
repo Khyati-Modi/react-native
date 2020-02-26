@@ -31,10 +31,11 @@ const AppContainer = createAppContainer(
 export default function App() {
   return (
     <Provider store={store}>
-      <AppContainer 
-      ref={navigatorRef => {
-        NavigationService.setTopLevelNavigator(navigatorRef);
-      }}/>
+      <AppContainer
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }}
+      />
     </Provider>
   );
 }
