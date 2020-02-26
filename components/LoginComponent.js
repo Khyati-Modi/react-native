@@ -16,17 +16,14 @@ import {connect} from 'react-redux';
 class LoginComponent extends Component {
   constructor() {
     super();
-    this.state = {email: 'jm1@example.com', password: 'jay@123'};
+    this.state = {email: 'jm1@example.com', password: 'jay@123', bgImage: 'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe'};
   }
 
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={{
-            uri:
-              'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe',
-          }}
+         source={{uri: this.state.bgImage}}
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <Text style={styles.loginTitle}> Login </Text>

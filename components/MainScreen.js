@@ -12,6 +12,7 @@ import ProfileComponent from './ProfileComponent';
 import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-community/async-storage';
+import NavigationService from './NavigationService';
 
 import RecipeList from './RecipeList';
 import LocationComponent from './LocationComponent';
@@ -135,9 +136,8 @@ const DrawerNavigation = createDrawerNavigator(
                   {
                     text: 'Yes',
                     onPress: () => {
-                    // AsyncStorage.clear();
-                      props.navigation.goBack();
-                    // props.navigation.navigate('MainScreen');
+                      AsyncStorage.clear();
+                      NavigationService.navigate('LoginComponent');
                     },
                   },
                 ],

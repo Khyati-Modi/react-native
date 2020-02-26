@@ -5,6 +5,7 @@ import LoginComponent from './components/LoginComponent';
 import MainScreen from './components/MainScreen';
 import {Provider} from 'react-redux';
 import store from './store';
+import NavigationService from './components/NavigationService';
 
 const AppContainer = createAppContainer(
   createAppContainer(
@@ -30,7 +31,10 @@ const AppContainer = createAppContainer(
 export default function App() {
   return (
     <Provider store={store}>
-      <AppContainer />
+      <AppContainer 
+      ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}/>
     </Provider>
   );
 }
