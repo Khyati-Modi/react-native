@@ -163,7 +163,9 @@ class RecipeList extends Component {
       ? this.removeFromFavourite(details)
       : this.AddToFavourite(details);
   }
+
   removeFromFavourite(details) {
+    details.inCookingList = 0
     fetch(constant.Remove_From_CookingList, {
       method: 'POST',
       body: JSON.stringify({
@@ -177,14 +179,6 @@ class RecipeList extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
-          details.inCookingList = 0
-          // this.props.navigation.state.params.details.inCookingList = 0;
-          Alert.alert('Success', 'Remove from cooking list', [
-            {
-              text: 'Ok',
-            },
-          ]);
-          this.setState({isLoading: false});
         });
       } else {
         console.log(response.body);
@@ -199,6 +193,7 @@ class RecipeList extends Component {
   }
 
   AddToFavourite(details) {
+    details.inCookingList = 1
     fetch(constant.Add_To_CookingList, {
       method: 'POST',
       body: JSON.stringify({
@@ -212,12 +207,11 @@ class RecipeList extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
-          details.inCookingList = 1
           this.setState({isLoading: false});
         });
       } else {
         console.log(response.body);
-        Alert.alert('Removed', 'Please try again later.', [
+        Alert.alert('Error', 'Please try again later.', [
           {
             text: 'Ok',
           },

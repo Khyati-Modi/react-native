@@ -95,6 +95,9 @@ export default class RecipeDetail extends Component {
 
   AddOrRemoveFromFavoutites(recipeId) {
     this.setState({isLoading: true});
+    this.state.inCookingList === 0
+    ? this.setState({inCookingList: 1})
+    : this.setState({inCookingList: 0});
     this.state.inCookingList === 1
       ? this.removeFromFavourite(this.state.recipeDetail.recipeId)
       : this.AddToFavourite(this.state.recipeDetail.recipeId);
@@ -113,15 +116,7 @@ export default class RecipeDetail extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
-          this.state.inCookingList === 0
-            ? this.setState({inCookingList: 1})
-            : this.setState({inCookingList: 0});
           this.props.navigation.state.params.details.inCookingList = 0;
-          Alert.alert('Success', 'Remove from cooking list', [
-            {
-              text: 'Ok',
-            },
-          ]);
           this.setState({isLoading: false});
         });
       } else {
@@ -150,10 +145,6 @@ export default class RecipeDetail extends Component {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
-
-          this.state.inCookingList === 0
-            ? this.setState({inCookingList: 1})
-            : this.setState({inCookingList: 0});
           this.props.navigation.state.params.details.inCookingList = 1;
           this.setState({isLoading: false});
         });
