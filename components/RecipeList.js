@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
@@ -60,6 +61,8 @@ class RecipeList extends Component {
             <RecipeCell
               itemList={item}
               onClick={details => this.onPostClick(details)}
+              onFavouriteClick={details => this.AddOrRemoveFromFavoutites(details)}
+              onDeleteClick = {details => this.deleteRecipe(details)}
             />
           )}
           keyExtractor={itemList => itemList.recipeId}
@@ -108,6 +111,120 @@ class RecipeList extends Component {
 
   onPostClick(details) {
     this.props.navigation.navigate('Details', {details: details});
+  }
+
+  deleteRecipe(details) {
+    Alert.alert('', 'Are you sure you want to delete this recipe?', [
+      {
+        text: 'Yes',
+        onPress: () => {          
+          let api = 'http://35.160.197.175:3006/api/v1/recipe/'+ details.recipeId
+          fetch(api, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization' : constant.User_Token,
+            },
+          }).then(response => {
+            if (response.status === 200) {
+              return response.json().then(responseJSON => {
+                console.log(responseJSON);
+                Alert.alert('Success', 'Recipe deleted successfully!', [
+                  {
+                    text: 'Ok',
+                  },
+                ]);
+                // this.setState({isLoading: false});
+              });
+            } else {
+              console.log(response.body);
+              Alert.alert('Error', 'Please try again later.', [
+                {
+                  text: 'Ok',
+                },
+              ]);
+              // this.setState({isLoading: false});
+            }
+          });
+        },
+      },
+      {
+        text: 'No',
+        onPress: () => {
+          return null;
+        },
+      },
+    ]);
+  }
+
+  AddOrRemoveFromFavoutites(details) {
+    this.setState({isLoading: true});
+    details.inCookingList === 1
+      ? this.removeFromFavourite(details)
+      : this.AddToFavourite(details);
+  }
+  removeFromFavourite(details) {
+    fetch(constant.Remove_From_CookingList, {
+      method: 'POST',
+      body: JSON.stringify({
+        recipeId: details.recipeId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: constant.User_Token,
+      },
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJSON => {
+          console.log(responseJSON);
+          details.inCookingList = 0
+          // this.props.navigation.state.params.details.inCookingList = 0;
+          Alert.alert('Success', 'Remove from cooking list', [
+            {
+              text: 'Ok',
+            },
+          ]);
+          this.setState({isLoading: false});
+        });
+      } else {
+        console.log(response.body);
+        Alert.alert('Removed', 'Please try again later.', [
+          {
+            text: 'Ok',
+          },
+        ]);
+        this.setState({isLoading: false});
+      }
+    });
+  }
+
+  AddToFavourite(details) {
+    fetch(constant.Add_To_CookingList, {
+      method: 'POST',
+      body: JSON.stringify({
+        recipeId: details.recipeId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: constant.User_Token,
+      },
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJSON => {
+          console.log(responseJSON);
+          details.inCookingList = 1
+          this.setState({isLoading: false});
+        });
+      } else {
+        console.log(response.body);
+        Alert.alert('Removed', 'Please try again later.', [
+          {
+            text: 'Ok',
+          },
+        ]);
+        this.setState({isLoading: false});
+      }
+    });
   }
 }
 const mapDispatchToProps = dispatch => {

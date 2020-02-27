@@ -21,7 +21,9 @@ export default function RecipeCell(props) {
           {props.itemList.chefFirstName} {props.itemList.chefLastName}
         </Text>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            props.onDeleteClick(props.itemList);
+          }}>
             <Feather name="more-vertical" size={25} />
           </TouchableOpacity>
         </View>
@@ -44,7 +46,9 @@ export default function RecipeCell(props) {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>
-          <TouchableOpacity style={styles.leftActionButton}>
+          <TouchableOpacity style={styles.leftActionButton} onPress={() => {
+            props.onFavouriteClick(props.itemList);
+          }}>
             {props.itemList.inCookingList === 1 ? (
               <AntDesign name="heart" size={25} color="red" />
             ) : (

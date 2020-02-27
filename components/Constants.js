@@ -18,3 +18,5 @@ export const Search_Recipe_API =
   'http://35.160.197.175:3006/api/v1/recipe/feeds?q=';
 export const Add_Recipe_Image =
   'http://35.160.197.175:3006/api/v1/recipe/add-update-recipe-photo';
+  export const Delete_Recipe = 
+  'http://35.160.197.175:3006/api/v1/recipe/';
