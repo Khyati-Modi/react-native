@@ -16,3 +16,5 @@ export const Add_New_Recipe = 'http://35.160.197.175:3006/api/v1/recipe/add';
 export const Recipe_Detail_API = 'http://35.160.197.175:3006/api/v1/recipe';
 export const Search_Recipe_API =
   'http://35.160.197.175:3006/api/v1/recipe/feeds?q=';
+export const Add_Recipe_Image =
+  'http://35.160.197.175:3006/api/v1/recipe/add-update-recipe-photo';

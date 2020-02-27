@@ -69,7 +69,6 @@ class RecipeList extends Component {
     );
   }
   goToAddRecipe = () => {
-    console.log('inside add recipe');
     this.props.navigation.navigate('AddRecipe');
   };
   fetchRecipeList = () => {
