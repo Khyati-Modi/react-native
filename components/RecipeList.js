@@ -129,7 +129,7 @@ class RecipeList extends Component {
             if (response.status === 200) {
               return response.json().then(responseJSON => {
                 console.log(responseJSON);
-                Alert.alert('Success', 'Recipe deleted successfully!', [
+                Alert.alert('Deleted', 'Recipe deleted successfully!', [
                   {
                     text: 'Ok',
                   },
