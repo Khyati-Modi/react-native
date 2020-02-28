@@ -16,9 +16,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
 
 export default class SearchComponent extends Component {
-  componentDidMount() {
-    // this.setState({search: ' '});
-  }
   constructor() {
     super();
     this.state = {
@@ -27,6 +24,7 @@ export default class SearchComponent extends Component {
       refreshing: false,
       setRefreshing: false,
       search: '',
+      initialState: true,
     };
   }
 
@@ -38,15 +36,19 @@ export default class SearchComponent extends Component {
             <TextInput
               style={{width: '90%', padding: 10}}
               placeholder="Search any recipe here "
+              placeholderTextColor="black"
               value={this.state.search}
               onChangeText={search => this.setState({search})}
+              returnKeyType="search"
+              autoFocus={true}
+              onSubmitEditing={this.onSearchClick}
             />
             <TouchableOpacity
               style={{alignSelf: 'center'}}
-              onPress={() => this.onSearchClick()}>
+              onPress={() => this.onClear()}>
               <AntDesign
                 style={{alignItems: 'flex-end'}}
-                name="search1"
+                name="close"
                 color="#005CFF"
                 size={20}
               />
@@ -107,9 +109,11 @@ export default class SearchComponent extends Component {
     return (
       //View to show when list is empty
       <View style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{textAlign: 'center', fontSize: 20}}>
-          No Recipes Found
-        </Text>
+        {!this.state.initialState && (
+          <Text style={{textAlign: 'center', fontSize: 20}}>
+            No Recipes Found
+          </Text>
+        )}
       </View>
     );
   };
@@ -119,7 +123,7 @@ export default class SearchComponent extends Component {
   };
 
   onSearchClick = () => {
-    console.log(this.state.search);
+    this.setState({initialState: false});
     const apiURL = constant.Search_Recipe_API + this.state.search;
     fetch(apiURL, {
       method: 'GET',
@@ -131,7 +135,6 @@ export default class SearchComponent extends Component {
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log('ssucessss!');
           this.setState({searchResult: responseJSON});
           this.setState({isLoading: false});
         });
@@ -144,6 +147,10 @@ export default class SearchComponent extends Component {
         ]);
       }
     });
+  };
+
+  onClear = () => {
+    this.setState({searchResult: '', search: '', initialState: true});
   };
 }
 const styles = StyleSheet.create({

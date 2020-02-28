@@ -2,12 +2,11 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React, {Component} from 'react';
 import {Text, View, SafeAreaView, ScrollView, Alert} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
 
 import DetailsMenu from './DetailsMenu';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default class RecipeDetail extends Component {
   componentDidMount() {
@@ -18,13 +17,16 @@ export default class RecipeDetail extends Component {
     );
     this.setState({preparationTime: time[0]});
     this.setState({preparationValue: time[1]});
-    this.props.navigation.addListener("didFocus", () => {
-      this.setState({inCookingList: this.props.navigation.state.params.details.inCookingList});
+    this.props.navigation.addListener('didFocus', () => {
+      this.setState({
+        inCookingList: this.props.navigation.state.params.details.inCookingList,
+      });
     });
   }
   constructor() {
     super();
     this.state = {
+      isLoading: false,
       recipeDetail: [],
       preparationTime: '',
       preparationValue: '',
@@ -38,15 +40,31 @@ export default class RecipeDetail extends Component {
         <ScrollView>
           <View style={{backgroundColor: 'white'}}>
             <View style={{flexDirection: 'row', top: 8}}>
-              <Text style={{fontSize: 25, fontWeight: 'bold'}}> {this.state.recipeDetail.recipeName}</Text>
+              <Text style={{fontSize: 25, fontWeight: 'bold'}}>
+                {' '}
+                {this.state.recipeDetail.recipeName}
+              </Text>
               <View style={{flex: 0.97, alignItems: 'flex-end'}}>
-              <TouchableOpacity onPress={ recipeId => this.AddOrRemoveFromFavoutites(this.state.recipeDetail.recipeId) }> 
-              { this.state.recipeDetail.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={recipeId =>
+                    this.AddOrRemoveFromFavoutites(
+                      this.state.recipeDetail.recipeId,
+                    )
+                  }>
+                  {this.state.recipeDetail.inCookingList === 1 ? (
+                    <AntDesign name="heart" size={25} color="red" />
+                  ) : (
+                    <AntDesign name="hearto" size={25} />
+                  )}
+                </TouchableOpacity>
                 {/* <FontAwesome name="bookmark-o" size={25} /> */}
               </View>
             </View>
-            <Text style={{fontSize: 18, top: 10}}> By chef {this.state.recipeDetail.chefFirstName} {this.state.recipeDetail.chefLastName} </Text>
+            <Text style={{fontSize: 18, top: 10}}>
+              {' '}
+              By chef {this.state.recipeDetail.chefFirstName}{' '}
+              {this.state.recipeDetail.chefLastName}{' '}
+            </Text>
             <View style={{top: 20, height: 10}} />
             <View style={{height: 10, backgroundColor: 'white'}} />
             <DetailsMenu details={this.props.navigation.state.params.details} />
@@ -75,43 +93,43 @@ export default class RecipeDetail extends Component {
     );
   }
 
-AddOrRemoveFromFavoutites(recipeId) {
-  this.state.inCookingList == 1 ? this.removeFromFavourite(this.state.recipeDetail.recipeId)  : this.AddToFavourite(this.state.recipeDetail.recipeId)
-}
+  AddOrRemoveFromFavoutites(recipeId) {
+    this.setState({isLoading: true});
+    this.state.inCookingList === 0
+    ? this.setState({inCookingList: 1})
+    : this.setState({inCookingList: 0});
+    this.state.inCookingList === 1
+      ? this.removeFromFavourite(this.state.recipeDetail.recipeId)
+      : this.AddToFavourite(this.state.recipeDetail.recipeId);
+  }
   removeFromFavourite(recipeId) {
-      fetch(constant.Remove_From_CookingList, {
-        method: 'POST',
-        body: JSON.stringify({
-          recipeId: recipeId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: constant.User_Token,
-        },
-      }).then(response => {
-        if (response.status === 200) {
-          return response.json().then(responseJSON => {
-            console.log(responseJSON);
-            {this.state.inCookingList == 0 ? this.setState({inCookingList: 1}) : this.setState({inCookingList: 0})}
-            this.props.navigation.state.params.details.inCookingList = 0
-            Alert.alert('Success', 'Remove from cooking list', [
-              {
-                text: 'Ok',
-              },
-            ]);
-            this.setState({isLoading: false});
-          });
-        } else {
-          console.log(response.body);
-          Alert.alert('Removed', 'Please try again later.', [
-            {
-              text: 'Ok',
-            },
-          ]);
+    fetch(constant.Remove_From_CookingList, {
+      method: 'POST',
+      body: JSON.stringify({
+        recipeId: recipeId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: constant.User_Token,
+      },
+    }).then(response => {
+      if (response.status === 200) {
+        return response.json().then(responseJSON => {
+          console.log(responseJSON);
+          this.props.navigation.state.params.details.inCookingList = 0;
           this.setState({isLoading: false});
-        }
-      });
-    }
+        });
+      } else {
+        console.log(response.body);
+        Alert.alert('Removed', 'Please try again later.', [
+          {
+            text: 'Ok',
+          },
+        ]);
+        this.setState({isLoading: false});
+      }
+    });
+  }
 
   AddToFavourite(recipeId) {
     fetch(constant.Add_To_CookingList, {
@@ -122,13 +140,12 @@ AddOrRemoveFromFavoutites(recipeId) {
       headers: {
         'Content-Type': 'application/json',
         Authorization: constant.User_Token,
-      }
+      },
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
           console.log(responseJSON);
-          {this.state.inCookingList == 0 ? this.setState({inCookingList: 1}) : this.setState({inCookingList: 0})}
-          this.props.navigation.state.params.details.inCookingList = 1
+          this.props.navigation.state.params.details.inCookingList = 1;
           this.setState({isLoading: false});
         });
       } else {

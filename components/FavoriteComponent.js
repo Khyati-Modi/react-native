@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import * as constant from './Constants';
 import FavoriteCell from './FavouriteCell';
+import {connect} from 'react-redux';
+import {setToken} from './Actions/userTokenAction';
 
-export default class FavoriteComponent extends Component {
+class FavoriteComponent extends Component {
   componentDidMount() {
-    this.setState({isLoading: true});
+    this.setState({ token: this.props.token})
     this.getFavRecipes();
   }
   onRefresh = () => {
@@ -24,6 +26,7 @@ export default class FavoriteComponent extends Component {
   constructor() {
     super();
     this.state = {
+      token: '',
       refreshing: false,
       setRefreshing: false,
       isLoading: false,
@@ -47,6 +50,7 @@ export default class FavoriteComponent extends Component {
             </Text>
           </View>
           <FlatList
+            style={{marginBottom: 90}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
@@ -63,17 +67,35 @@ export default class FavoriteComponent extends Component {
               />
             )}
             keyExtractor={itemList => itemList.recipeId}
+            ListEmptyComponent={this.ListEmpty}
           />
         </View>
       </SafeAreaView>
     );
   }
 
+  ListEmpty = () => {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignContent: 'center',
+          width: '100%',
+          height: 500,
+        }}>
+        <Text style={{alignItems: 'center', textAlign: 'center', fontSize: 15}}>
+          Oops! No Recipes added into favourite
+        </Text>
+      </View>
+    );
+  };
+
   separator = () => {
-    return <View style={{height: 8, width: '100%'}} />;
+    return <View style={{height: 4, width: '100%'}} />;
   };
 
   btnFavoutiteClick(details) {
+    this.setState({isLoading: true});
     fetch(constant.Remove_From_CookingList, {
       method: 'POST',
       body: JSON.stringify({
@@ -84,13 +106,11 @@ export default class FavoriteComponent extends Component {
       // },
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
         return response.json().then(responseJSON => {
-          console.log('Deleted ');
-          console.log(responseJSON);
           this.getFavRecipes();
           Alert.alert('Success', 'Remove from cooking list', [
             {
@@ -112,11 +132,12 @@ export default class FavoriteComponent extends Component {
   }
 
   getFavRecipes = () => {
+    this.setState({isLoading: true});
     fetch(constant.Cooking_List_API, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -150,3 +171,18 @@ export default class FavoriteComponent extends Component {
     });
   };
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: token => {
+      dispatch(setToken(token));
+    },
+  };
+};
+const mapStateToProps = state => {
+  return {token: state.userTokenReducer.token}
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FavoriteComponent);

@@ -4,6 +4,13 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+
 
 export default function RecipeCell(props) {
   return (
@@ -21,9 +28,18 @@ export default function RecipeCell(props) {
           {props.itemList.chefFirstName} {props.itemList.chefLastName}
         </Text>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
-          <TouchableOpacity>
-            <Feather name="more-vertical" size={25} />
-          </TouchableOpacity>
+        <Menu>
+      <MenuTrigger> 
+        <Feather name="more-vertical" size={25} />
+      </MenuTrigger>
+      <MenuOptions>
+        <MenuOption onSelect={() => {
+            props.onDeleteClick(props.itemList);
+          }} >
+          <Text style={{color: 'black'}}>Delete</Text>
+        </MenuOption>
+      </MenuOptions>
+    </Menu>
         </View>
       </View>
       <View style={styles.recipeImageView}>
@@ -44,8 +60,14 @@ export default function RecipeCell(props) {
       </View>
       <View style={styles.bottomView}>
         <View style={styles.bottomView}>
-        <TouchableOpacity style={styles.leftActionButton}>
-          { props.itemList.inCookingList === 1 ? <AntDesign name="heart" size={25} color='red'/>  :  <AntDesign name="hearto" size={25} />}
+          <TouchableOpacity style={styles.leftActionButton} onPress={() => {
+            props.onFavouriteClick(props.itemList);
+          }}>
+            {props.itemList.inCookingList === 1 ? (
+              <AntDesign name="heart" size={25} color="red" />
+            ) : (
+              <AntDesign name="hearto" size={25} />
+            )}
           </TouchableOpacity>
           <TouchableOpacity>
             <Image
@@ -69,7 +91,7 @@ export default function RecipeCell(props) {
         </View>
       </View>
       <View style={{top: 4, left: 10, bottom: 15}}>
-      <Text style={{fontWeight: 'bold', fontSize: 18}}>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>
           {' '}
           {props.itemList.recipeName}
         </Text>
@@ -82,6 +104,22 @@ export default function RecipeCell(props) {
     </View>
   );
 }
+const moreComponent = (itemList) => (
+  <View>
+      <Menu>
+      <MenuTrigger> 
+        <Feather name="more-vertical" size={25} />
+      </MenuTrigger>
+      <MenuOptions>
+        <MenuOption onSelect={() => {
+            props.onDeleteClick(itemList);
+          }} >
+          <Text style={{color: 'black'}}>Delete</Text>
+        </MenuOption>
+      </MenuOptions>
+    </Menu>
+  </View>
+);
 
 const styles = StyleSheet.create({
   mainView: {

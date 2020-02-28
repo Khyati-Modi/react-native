@@ -5,8 +5,16 @@ import {View, ActivityIndicator} from 'react-native';
 export default function LoadingIndicator(props) {
   if (props.isLoading) {
     return (
-      <View style={{width: '100%', height: '100%', zIndex: 10}}>
-        <ActivityIndicator size="large" color="#1774EA" style={{flex: 1}} />
+      <View
+        style={{
+          width: 50,
+          height: 50,
+          zIndex: 10,
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignSelf: 'center',
+        }}>
+        <ActivityIndicator size="large" color="black" style={{flex: 1}} />
       </View>
     );
   } else {

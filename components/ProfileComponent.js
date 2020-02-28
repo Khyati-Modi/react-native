@@ -7,7 +7,6 @@ import {setProfileImage} from './Actions/profileImageAction';
 
 import {
   Dimensions,
-  Alert,
   TouchableWithoutFeedback,
   FlatList,
   RefreshControl,
@@ -21,19 +20,19 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as constant from './Constants';
-// import LoadingIndicator from './LoadingIndicator';
+import LoadingIndicator from './LoadingIndicator';
 
 class ProfileComponent extends Component {
   onRefresh = () => {
-    this.setState({setRefreshing: true});
-    this.getListfromApi();
+    // this.setState({setRefreshing: true});
+    // this.getListfromApi();
   };
 
   componentDidMount() {
-    this.props.navigation.addListener("didFocus", () => {
+    this.props.navigation.addListener('didFocus', () => {
       this.setState({profilePicture: this.props.profilePicture});
     });
-    
+
     this.setState({isLoading: true, profilePicture: this.props.profilePicture});
     this.retrieveData();
   }
@@ -48,7 +47,8 @@ class ProfileComponent extends Component {
       setRefreshing: false,
       placeHolderImage:
         'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
-      profilePicture: 'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
+      profilePicture:
+        'https://www.mageworx.com/blog/wp-content/uploads/2012/06/Page-Not-Found-13.jpg',
     };
   }
   retrieveData = async () => {
@@ -60,6 +60,7 @@ class ProfileComponent extends Component {
     } catch (error) {
       console.log(error);
     }
+    this.setState({isLoading: false});
   };
   render() {
     return (
@@ -108,8 +109,9 @@ class ProfileComponent extends Component {
             <Text style={{alignSelf: 'center'}}> Edit Profile</Text>
           </TouchableOpacity>
         </View>
-        {/* <LoadingIndicator isLoading={this.state.isLoading} /> */}
+        <LoadingIndicator isLoading={this.state.isLoading} />
         <FlatList
+          style={{marginBottom: 230}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}

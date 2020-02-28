@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -12,6 +12,7 @@ import ProfileComponent from './ProfileComponent';
 import {DrawerItems} from 'react-navigation-drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-community/async-storage';
+import NavigationService from './NavigationService';
 
 import RecipeList from './RecipeList';
 import LocationComponent from './LocationComponent';
@@ -19,9 +20,8 @@ import FavoriteComponent from './FavoriteComponent';
 import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
+import AddRecipeComponent from './AddRecipeComponent';
 import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
-import LoginComponent from './LoginComponent';
-
 
 export default class MainScreen extends Component {
   render() {
@@ -43,6 +43,9 @@ const homePageNavigator = createStackNavigator(
         title: null,
       }),
     },
+    AddRecipe: {
+      screen: AddRecipeComponent,
+    },
   },
   {
     mode: 'card',
@@ -59,10 +62,9 @@ const profileNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileComponent,
-      navigationOptions: ({navigation}) => ({
-        title: null,
+      navigationOptions: {
         header: null,
-      }),
+      },
     },
   },
   {
@@ -74,7 +76,7 @@ homePageNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
   if (navigation.state.routes.length > 1) {
     navigation.state.routes.map(route => {
-      if (route.routeName === 'Details') {
+      if (route.routeName === 'Details' || route.routeName === 'AddRecipe') {
         tabBarVisible = false;
       } else {
         tabBarVisible = true;
@@ -86,7 +88,6 @@ homePageNavigator.navigationOptions = ({navigation}) => {
     tabBarVisible,
   };
 };
-
 
 profileNavigator.navigationOptions = ({navigation}) => {
   let tabBarVisible;
@@ -135,9 +136,8 @@ const DrawerNavigation = createDrawerNavigator(
                   {
                     text: 'Yes',
                     onPress: () => {
-                    // AsyncStorage.clear();
-                      props.navigation.goBack();
-                    // props.navigation.navigate('MainScreen');
+                      AsyncStorage.clear();
+                      NavigationService.navigate('LoginComponent');
                     },
                   },
                 ],

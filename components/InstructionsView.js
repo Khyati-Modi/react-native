@@ -35,7 +35,6 @@ export default class InstructionsView extends Component {
   render() {
     return (
       <SafeAreaView>
-        {/* <View style={styles.container}> */}
         <LoadingIndicator isLoading={this.state.isLoading} />
         <FlatList
           style={styles.container}
@@ -64,13 +63,11 @@ export default class InstructionsView extends Component {
           extraData={this.state}
           ListEmptyComponent={this.ListEmpty}
         />
-        {/* </View> */}
       </SafeAreaView>
     );
   }
   ListEmpty = () => {
     return (
-      //View to show when list is empty
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text style={{alignItems: 'center', textAlign: 'center', fontSize: 20}}>
           No Instruction Found

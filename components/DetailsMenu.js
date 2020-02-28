@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
-
 import IngredientsView from './IngredientsView';
 import InstructionsView from './InstructionsView';
 import DetailsView from './DetialsView';

@@ -12,26 +12,31 @@ import {
 import * as constant from './Constants';
 import {setToken} from './Actions/userTokenAction';
 import {connect} from 'react-redux';
+import LoadingIndicator from './LoadingIndicator';
 
 class LoginComponent extends Component {
   constructor() {
     super();
-    this.state = {email: 'jm1@example.com', password: 'jay@123'};
+    this.state = {
+      isLoading: false,
+      email: 'jm9@example.com',
+      password: 'jay@123',
+      bgImage:
+        'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe',
+    };
   }
+  componentDidMount() {}
 
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground
-          source={{
-            uri:
-              'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe',
-          }}
+          source={{uri: this.state.bgImage}}
           style={styles.backgroundImage}>
           <View style={styles.topView}>
             <Text style={styles.loginTitle}> Login </Text>
           </View>
-
+          <LoadingIndicator isLoading={this.state.isLoading} />
           <View style={styles.middleView}>
             <TextInput
               keyboardType="email-address"
@@ -62,7 +67,8 @@ class LoginComponent extends Component {
   }
 
   onLogin = () => {
-    fetch('http://35.160.197.175:3006/api/v1/user/login', {
+    this.setState({isLoading: true});
+    fetch(constant.User_Login, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +83,7 @@ class LoginComponent extends Component {
           this.props.setToken(responseJSON.token);
           this.goToHomePage;
           this.storeData(responseJSON);
-
+          this.setState({isLoading: false});
           Alert.alert('Success', 'Successfully logged in', [
             {
               text: 'Ok',
@@ -100,11 +106,15 @@ class LoginComponent extends Component {
     try {
       let userId = '';
       let UserName = '';
+      let UserToken = '';
       userId = responseJSON.email;
       UserName = responseJSON.firstName + ' ' + responseJSON.lastName;
+      UserToken = 'Bearer ' + responseJSON.token
+      console.log({UserToken});
+      
       await AsyncStorage.setItem(constant.UserName, UserName);
       await AsyncStorage.setItem(constant.NAME, userId);
-      await AsyncStorage.setItem(constant.User_Token, responseJSON.token);
+      await AsyncStorage.setItem(constant.User_Token, UserToken);
     } catch (e) {
       console.log('Error to store data' + e);
     }
