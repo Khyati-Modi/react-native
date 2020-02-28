@@ -15,7 +15,6 @@ export default function FavoriteCell(props) {
     <SafeAreaView style={styles.safeView}>
       <View style={styles.mainView}>
         <View style={styles.recipeImageView}>
-          {/* <TouchableOpacity onPress={() => {props.onClick(props.itemList)}}> */}
           <TouchableOpacity>
             <Image
               resizeMode={'stretch'}

@@ -75,12 +75,13 @@ class RecipeList extends Component {
     this.props.navigation.navigate('AddRecipe');
   };
   fetchRecipeList = () => {
+    console.log(this.props.token);
     fetch(constant.All_Recipe_List, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.User_Token,
+        'Authorization': this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -123,12 +124,13 @@ class RecipeList extends Component {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization' : constant.User_Token,
+              'Authorization' : this.props.token,
             },
           }).then(response => {
             if (response.status === 200) {
               return response.json().then(responseJSON => {
                 console.log(responseJSON);
+                this.fetchRecipeList();
                 Alert.alert('Deleted', 'Recipe deleted successfully!', [
                   {
                     text: 'Ok',
@@ -173,7 +175,7 @@ class RecipeList extends Component {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -201,7 +203,7 @@ class RecipeList extends Component {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {

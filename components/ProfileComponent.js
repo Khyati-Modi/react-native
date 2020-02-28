@@ -24,8 +24,8 @@ import LoadingIndicator from './LoadingIndicator';
 
 class ProfileComponent extends Component {
   onRefresh = () => {
-    this.setState({setRefreshing: true});
-    this.getListfromApi();
+    // this.setState({setRefreshing: true});
+    // this.getListfromApi();
   };
 
   componentDidMount() {

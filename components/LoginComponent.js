@@ -19,7 +19,7 @@ class LoginComponent extends Component {
     super();
     this.state = {
       isLoading: false,
-      email: 'jm1@example.com',
+      email: 'jm9@example.com',
       password: 'jay@123',
       bgImage:
         'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe',
@@ -68,7 +68,7 @@ class LoginComponent extends Component {
 
   onLogin = () => {
     this.setState({isLoading: true});
-    fetch('http://35.160.197.175:3006/api/v1/user/login', {
+    fetch(constant.User_Login, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,11 +106,15 @@ class LoginComponent extends Component {
     try {
       let userId = '';
       let UserName = '';
+      let UserToken = '';
       userId = responseJSON.email;
       UserName = responseJSON.firstName + ' ' + responseJSON.lastName;
+      UserToken = 'Bearer ' + responseJSON.token
+      console.log({UserToken});
+      
       await AsyncStorage.setItem(constant.UserName, UserName);
       await AsyncStorage.setItem(constant.NAME, userId);
-      await AsyncStorage.setItem(constant.User_Token, responseJSON.token);
+      await AsyncStorage.setItem(constant.User_Token, UserToken);
     } catch (e) {
       console.log('Error to store data' + e);
     }

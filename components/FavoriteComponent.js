@@ -10,9 +10,12 @@ import {
 } from 'react-native';
 import * as constant from './Constants';
 import FavoriteCell from './FavouriteCell';
+import {connect} from 'react-redux';
+import {setToken} from './Actions/userTokenAction';
 
-export default class FavoriteComponent extends Component {
+class FavoriteComponent extends Component {
   componentDidMount() {
+    this.setState({ token: this.props.token})
     this.getFavRecipes();
   }
   onRefresh = () => {
@@ -23,6 +26,7 @@ export default class FavoriteComponent extends Component {
   constructor() {
     super();
     this.state = {
+      token: '',
       refreshing: false,
       setRefreshing: false,
       isLoading: false,
@@ -72,7 +76,6 @@ export default class FavoriteComponent extends Component {
 
   ListEmpty = () => {
     return (
-      //View to show when list is empty
       <View
         style={{
           justifyContent: 'center',
@@ -103,7 +106,7 @@ export default class FavoriteComponent extends Component {
       // },
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -134,7 +137,7 @@ export default class FavoriteComponent extends Component {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: constant.User_Token,
+        Authorization: this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -168,3 +171,18 @@ export default class FavoriteComponent extends Component {
     });
   };
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: token => {
+      dispatch(setToken(token));
+    },
+  };
+};
+const mapStateToProps = state => {
+  return {token: state.userTokenReducer.token}
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(FavoriteComponent);

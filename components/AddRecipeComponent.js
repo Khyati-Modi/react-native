@@ -5,19 +5,22 @@ import {
   Image,
   TextInput,
   StyleSheet,
-  Button,
   Text,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as constant from './Constants';
 import ImagePicker from 'react-native-image-picker';
+import {connect} from 'react-redux';
+import {setToken} from './Actions/userTokenAction';
 
-export default class AddRecipeComponent extends Component {
+class AddRecipeComponent extends Component {
   constructor() {
     super();
     this.state = {
+      token: '',
       recipeName: '',
       serves: '',
       complexity: '',
@@ -28,10 +31,14 @@ export default class AddRecipeComponent extends Component {
       photo: '',
     };
   }
+  componentDidMount(){
+    this.setState({ token: this.props.token})
+  }
   render() {
     return (
+      <ScrollView>
       <View style={{flex: 1, backgroundColor: 'white'}}>
-        <View style={{top: 10, flex: 0.4, width: '100%'}}>
+        <View style={{top: 10, flex: 0.3, width: '100%'}}>
           <Text style={{padding: 10}}> Add image of your Recipe</Text>
           <View style={{justifyContent: 'center'}}>
             <Image
@@ -60,7 +67,7 @@ export default class AddRecipeComponent extends Component {
         <View
           style={{
             flex: 0.7,
-            marginTop: 10,
+            top: 10,
           }}>
           <View style={styles.borderViewStyle}>
             <TextInput
@@ -102,16 +109,32 @@ export default class AddRecipeComponent extends Component {
             />
           </View>
           <View
-            style={{top: 30, width: '40%', height: 60, alignSelf: 'center'}}>
-            <Button title="Add Recipe" onPress={this.addRecipe} />
+            style={{top: 30, width: '40%', height: 45, alignSelf: 'center'}}>
+              <TouchableOpacity style={{ backgroundColor: '#0080ff', width: '100%', height: '100%', justifyContent: 'center', borderRadius: 30}} onPress={this.addRecipe}> 
+              <Text style={{alignSelf: 'center', color: 'white'}}> Add Recipe </Text>
+              </TouchableOpacity>
+            {/* <Button title="Add Recipe" onPress={this.addRecipe} /> */}
           </View>
         </View>
       </View>
+      </ScrollView>
     );
   }
-
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(constant.User_Token);
+      if (value !== null) {
+        this.setState({User_Token: value});
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    this.setState({isLoading: false});
+  };
   addRecipe = () => {
     this.setState({isLoading: true});
+    console.log(this.props.token);
+    
     fetch(constant.Add_New_Recipe, {
       method: 'POST',
       body: JSON.stringify({
@@ -123,7 +146,7 @@ export default class AddRecipeComponent extends Component {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.User_Token,
+        'Authorization': this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -154,7 +177,7 @@ export default class AddRecipeComponent extends Component {
   uploadImage = () => {
     this.setState({isLoading: true});
     var photo = {
-      uri: this.state.image,
+      uri: this.state.photo,
       type: 'image/jpeg',
       name: 'photo.jpg',
     };
@@ -168,7 +191,7 @@ export default class AddRecipeComponent extends Component {
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': constant.User_Token,
+        'Authorization': this.props.token,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -209,7 +232,7 @@ export default class AddRecipeComponent extends Component {
         console.log('ImagePicker Error: ', response.error);
       } else {
         let source = response;
-        console.log(response.uri);
+        console.log(response.uri)
         this.setState({
           photo: response.uri,
         });
@@ -217,6 +240,20 @@ export default class AddRecipeComponent extends Component {
     });
   };
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    setToken: token => {
+      dispatch(setToken(token));
+    },
+  };
+};
+const mapStateToProps = state => {
+  return {token: state.userTokenReducer.token}
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AddRecipeComponent);
 
 const styles = StyleSheet.create({
   borderViewStyle: {
