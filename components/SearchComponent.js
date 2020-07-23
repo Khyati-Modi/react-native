@@ -35,6 +35,7 @@ export default class SearchComponent extends Component {
           <View style={styles.SearchView}>
             <TextInput
               style={{width: '90%', padding: 10}}
+              autoCorrect={false}
               placeholder="Search any recipe here "
               placeholderTextColor="black"
               value={this.state.search}

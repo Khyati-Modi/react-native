@@ -19,7 +19,7 @@ class LoginComponent extends Component {
     super();
     this.state = {
       isLoading: false,
-      email: 'jm9@example.com',
+      email: 'jm1@example.com',
       password: 'jay@123',
       bgImage:
         'https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm28-gradient-poy-348_2.jpg?auto=format&bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&mark=rawpixel-watermark.png&markalpha=90&markpad=13&markscale=10&markx=25&q=75&usm=15&vib=3&w=1400&s=1542957193f65cb42e8d1491ac952dbe',
@@ -41,6 +41,7 @@ class LoginComponent extends Component {
             <TextInput
               keyboardType="email-address"
               placeholder="Email"
+              autoCorrect={false}
               style={[styles.commonInput, styles.emailInput]}
               value={this.state.email}
               onChangeText={email => this.setState({email})}
