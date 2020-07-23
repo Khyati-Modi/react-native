@@ -16,11 +16,13 @@ import * as constant from './Constants';
 import {connect} from 'react-redux';
 import {setRecipeList} from './Actions/dataAction';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class RecipeList extends Component {
   constructor() {
     super();
     this.state = {
+      userToken: '',
       itemList: [],
       refreshing: false,
       setRefreshing: false,
@@ -28,8 +30,20 @@ class RecipeList extends Component {
   }
 
   componentDidMount() {
-    this.fetchRecipeList();
+    this.retrieveData();
   }
+  
+  retrieveData = async () => {
+    try {
+      const token = await AsyncStorage.getItem(constant.User_Token);
+      if (token !== null) {
+        this.setState({userToken: token});
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    this.fetchRecipeList();
+  };
 
   onRefresh = () => {
     this.setState({setRefreshing: true});
@@ -75,13 +89,12 @@ class RecipeList extends Component {
     this.props.navigation.navigate('AddRecipe');
   };
   fetchRecipeList = () => {
-    console.log(this.props.token);
     fetch(constant.All_Recipe_List, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         // eslint-disable-next-line prettier/prettier
-        'Authorization': this.props.token,
+        'Authorization': this.state.userToken,
       },
     }).then(response => {
       if (response.status === 200) {
