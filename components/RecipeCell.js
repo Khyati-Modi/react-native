@@ -76,13 +76,12 @@ export default function RecipeCell(props) {
               source={require('../images/Comment.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              resizeMode={'contain'}
-              style={[styles.actionImageView, styles.leftActionButton]}
-              source={require('../images/Send.png')}
-            />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.leftActionButton} onPress={() => {
+            console.log("Tappable event");
+            props.onSendClick(props.itemList);
+          }}>
+             <Feather name="send" size={25}/>
+        </TouchableOpacity>
         </View>
         <View style={{flex: 1, alignItems: 'flex-end', top: 4}}>
           <TouchableOpacity style={styles.rightSideImage}>

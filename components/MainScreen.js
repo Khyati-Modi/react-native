@@ -23,6 +23,8 @@ import EditProfileComponent from './EditProfileComponent';
 import AddRecipeComponent from './AddRecipeComponent';
 import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
 
+import Share from "react-native-share";
+
 export default class MainScreen extends Component {
   render() {
     return <AppContainer />;
@@ -145,6 +147,13 @@ const DrawerNavigation = createDrawerNavigator(
               )
             }>
             <Text style={{margin: 16, fontWeight: 'bold'}}>Logout</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { 
+              console.log("Implementation Pending");
+              }
+            }>
+            <Text style={{margin: 16, fontWeight: 'bold'}}>Share App</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </View>

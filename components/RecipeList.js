@@ -76,6 +76,7 @@ class RecipeList extends Component {
               itemList={item}
               onClick={details => this.onPostClick(details)}
               onFavouriteClick={details => this.AddOrRemoveFromFavoutites(details)}
+              onSendClick = {details => this.SharePost(details)}
               onDeleteClick = {details => this.deleteRecipe(details)}
             />
           )}
@@ -137,7 +138,7 @@ class RecipeList extends Component {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization' : this.props.token,
+              'Authorization' : this.state.userToken,
             },
           }).then(response => {
             if (response.status === 200) {
@@ -179,6 +180,11 @@ class RecipeList extends Component {
       : this.AddToFavourite(details);
   }
 
+  SharePost(details) {
+    console.log(details);
+    console.log("Post will be share from here");
+  }
+
   removeFromFavourite(details) {
     details.inCookingList = 0
     fetch(constant.Remove_From_CookingList, {
@@ -188,7 +194,7 @@ class RecipeList extends Component {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.props.token,
+        'Authorization' : this.state.userToken,
       },
     }).then(response => {
       if (response.status === 200) {
@@ -216,7 +222,7 @@ class RecipeList extends Component {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: this.props.token,
+        'Authorization' : this.state.userToken,
       },
     }).then(response => {
       if (response.status === 200) {
