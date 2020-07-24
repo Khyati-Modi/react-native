@@ -21,9 +21,7 @@ import SearchComponent from './SearchComponent';
 import RecipeDetail from './RecipeDetail';
 import EditProfileComponent from './EditProfileComponent';
 import AddRecipeComponent from './AddRecipeComponent';
-import {View, SafeAreaView, TouchableOpacity, Text, Alert} from 'react-native';
-
-import Share from "react-native-share";
+import {View, SafeAreaView, TouchableOpacity, Text, Alert, Share} from 'react-native';
 
 export default class MainScreen extends Component {
   render() {
@@ -150,7 +148,11 @@ const DrawerNavigation = createDrawerNavigator(
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => { 
-              console.log("Implementation Pending");
+              Share.share({
+                message: "Sharing your app",
+              })
+              .then(result => console.log(result))
+              .catch(errorMsg => console.log(errorMsg));
               }
             }>
             <Text style={{margin: 16, fontWeight: 'bold'}}>Share App</Text>

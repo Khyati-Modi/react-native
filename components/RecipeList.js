@@ -8,6 +8,7 @@ import {
   StyleSheet,
   RefreshControl,
   Alert,
+  Share,
 } from 'react-native';
 import RecipeCell from './RecipeCell';
 import Feather from 'react-native-vector-icons/Feather';
@@ -76,7 +77,7 @@ class RecipeList extends Component {
               itemList={item}
               onClick={details => this.onPostClick(details)}
               onFavouriteClick={details => this.AddOrRemoveFromFavoutites(details)}
-              onSendClick = {details => this.SharePost(details)}
+              onSendClick={details => this.SharePost(details)}
               onDeleteClick = {details => this.deleteRecipe(details)}
             />
           )}
@@ -183,7 +184,13 @@ class RecipeList extends Component {
   SharePost(details) {
     console.log(details);
     console.log("Post will be share from here");
-  }
+    const msg = "Hey, Check out this delicious recipe of " + details.recipeName
+    Share.share({
+      message: msg,
+    })
+    .then(result => console.log(result))
+    .catch(errorMsg => console.log(errorMsg));
+    }
 
   removeFromFavourite(details) {
     details.inCookingList = 0
